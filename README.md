@@ -5,8 +5,7 @@ for a Code Fellows 401 Python course.
 
 ## Cooks
 + Hannah Krager
-+ Michael Stokely
-+ Michael Sullivan
++ Michael Stokley
 + A.J. Wohlfert
 
 Kitchen Prep
