@@ -63,3 +63,7 @@ target/
 
 #Virtual
 venv/
+bin/
+include/
+share/
+pip-selfcheck.json
