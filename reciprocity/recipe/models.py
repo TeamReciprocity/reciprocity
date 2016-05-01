@@ -23,6 +23,23 @@ TIME_CHOICES = (
     (4.0, '4+ hours'),
 )
 
+PRIVACY_CHOICES = (
+    ('pu', 'Public'),
+    ('pr', 'Private'),
+    ('fr', 'Friends Only'),
+)
+
+
+@python_2_unicode_compatible
+class Ingredient(models.Model):
+    """Instantiate an Ingredient model instance."""
+
+    def __str__(self):
+        """Display model instance."""
+        return self.name
+
+    name = models.CharField(max_length=128, unique=True)
+
 
 @python_2_unicode_compatible
 class Recipe(models.Model):
@@ -30,10 +47,12 @@ class Recipe(models.Model):
 
     def __str__(self):
         """Display model instance."""
-        return self.recipe_name
+        return self.title
 
     title = models.CharField(help_text='What is your recipe called?',
                              max_length=128)
+    description = models.TextField(blank=True, null=True,
+                                   help_text='Tell us about your recipe.')
     prep_time = models.FloatField(choices=TIME_CHOICES,
                                   blank=True,
                                   null=True,)
@@ -43,5 +62,24 @@ class Recipe(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.CASCADE,
                                related_name='authored_recipes')
+    privacy = models.CharField(max_length=2, choices=PRIVACY_CHOICES,
+                               default='pu')
+    directions = models.TextField(help_text='How is this recipe prepared?')
+    parent = models.ForeignKey('self', related_name='variations', null=True,
+                               blank=True)
+    ingredients = models.ManyToManyField(Ingredient,
+                                         through='RecipeIngredientRelationship')
 
 
+@python_2_unicode_compatible
+class RecipeIngredientRelationship(models.Model):
+    """Instantiate a Recipe, Ingredient relationship."""
+
+    def __str__(self):
+        """Display associated recipe and ingredient."""
+        return 'Recipe: {}, Ingredient: {}'.format(self.recipe,
+                                                   self.ingredient)
+
+    recipe = models.ForeignKey(Recipe)
+    ingredient = models.ForeignKey(Ingredient)
+    quantity = models.CharField(max_length=128)
