@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.test import TestCase
+from django.test import Client, TestCase
 from factory.django import DjangoModelFactory
 from .models import Ingredient, Recipe, RecipeIngredientRelationship
 
@@ -39,15 +39,21 @@ class RecipeIngredientFactory(DjangoModelFactory):
 
 class RecipeTest(TestCase):
     """Test the Recipe model."""
-    def setUp(self):
-        self.recipe1 = RecipeFactory.build()
+    fixtures = ['users.json', 'recipes.json']
 
-    def test_factory(self):
-        """Confirm factory is creating recipe model instances."""
-        self.assertIsInstance(self.recipe1, Recipe)
+    def setUp(self):
+        self.no_work_bread = Recipe.objects.get(pk=1)
+        self.ants_on_a_log = Recipe.objects.get(pk=2)
+        self.michael = self.no_work_bread.author
 
     def test_title(self):
-        self.assertEqual(self.recipe1.title, '')
+        self.assertEqual(self.no_work_bread.title, 'No Work Bread')
+
+    def test_author_relationship(self):
+        self.assertEqual(self.no_work_bread.author, self.michael)
+
+    def test_parent_not_required(self):
+        self.assertFalse(self.no_work_bread.parent)
 
 
 class IngredientTest(TestCase):
@@ -69,3 +75,38 @@ class RecipeIngredientTest(TestCase):
         """Confirm factory is creating recipe-ingredient model instances."""
         self.assertIsInstance(self.recipe_ingredient1,
                               RecipeIngredientRelationship)
+
+
+class Autocomplete(TestCase):
+    fixtures = ['users.json',
+                'ingredients.json',
+                'recipes.json',
+                'recipeingredientrelationship']
+
+    def setUp(self):
+        self.auth_user = UserFactory()
+        username = self.auth_user.username
+        password = 'this is the password'
+        self.auth_user.set_password(password)
+        self.auth_user.save()
+        self.auth_client = Client()
+        self.loggedin = self.auth_client.login(username=username,
+                                               password=password)
+        self.unauth_client = Client()
+
+    def test_authenticated(self):
+        self.assertTrue(self.loggedin)
+
+    def test_autocomplete(self):
+        url = '/recipe/ingredient-autocomplete/'
+        query = '?q=w'
+        response = self.auth_client.get(''.join([url, query]))
+        expected = ('{"pagination":'
+                    ' {"more": false},'
+                    ' "results":'
+                    ' [{"text": "white flour", "id": 1},'
+                    ' {"text": "water", "id": 2},'
+                    ' {"text": "Create \\"w\\"",'
+                    ' "id": "w", "create_id": true}]}'
+                    )
+        self.assertEqual(response.content, expected)
