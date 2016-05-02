@@ -3,7 +3,7 @@
     "model": "recipe.ingredient",
     "pk": 1,
     "fields": {
-        "name": "white flour"
+        "name": "flour, white"
     }
 },
 {

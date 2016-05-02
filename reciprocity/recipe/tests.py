@@ -110,12 +110,11 @@ class Autocomplete(TestCase):
         url = '/recipe/ingredient-autocomplete/'
         query = '?q=w'
         response = self.auth_client.get(''.join([url, query]))
-        expected = ('{"pagination":'
-                    ' {"more": false},'
-                    ' "results":'
-                    ' [{"text": "white flour", "id": 1},'
-                    ' {"text": "water", "id": 2},'
-                    ' {"text": "Create \\"w\\"",'
-                    ' "id": "w", "create_id": true}]}'
+        expected = ('{"pagination": '
+                    '{"more": false}, '
+                    '"results": '
+                    '[{"text": "water", "id": 2}, '
+                    '{"text": "Create \\"w\\"", '
+                    '"id": "w", "create_id": true}]}'
                     )
         self.assertEqual(response.content, expected)
