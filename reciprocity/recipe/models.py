@@ -51,7 +51,8 @@ class Recipe(models.Model):
 
     title = models.CharField(help_text='What is your recipe called?',
                              max_length=128)
-    description = models.TextField(blank=True, null=True,
+    description = models.TextField(blank=True,
+                                   null=True,
                                    help_text='Tell us about your recipe.')
     prep_time = models.FloatField(choices=TIME_CHOICES,
                                   blank=True,
@@ -62,13 +63,18 @@ class Recipe(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.CASCADE,
                                related_name='authored_recipes')
-    privacy = models.CharField(max_length=2, choices=PRIVACY_CHOICES,
+    privacy = models.CharField(max_length=2,
+                               choices=PRIVACY_CHOICES,
                                default='pu')
     directions = models.TextField(help_text='How is this recipe prepared?')
-    parent = models.ForeignKey('self', related_name='variations', null=True,
+    parent = models.ForeignKey('self',
+                               related_name='variations',
+                               null=True,
                                blank=True)
-    ingredients = models.ManyToManyField(Ingredient,
-                                         through='RecipeIngredientRelationship')
+    ingredients = models.ManyToManyField(
+        Ingredient,
+        through='RecipeIngredientRelationship'
+    )
 
 
 @python_2_unicode_compatible
