@@ -67,3 +67,4 @@ bin/
 include/
 share/
 pip-selfcheck.json
+db.sqlite3
