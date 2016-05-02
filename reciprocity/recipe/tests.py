@@ -42,17 +42,21 @@ class RecipeTest(TestCase):
     fixtures = ['users.json', 'recipes.json']
 
     def setUp(self):
+        """Prepare for class test methods."""
         self.no_work_bread = Recipe.objects.get(pk=1)
         self.ants_on_a_log = Recipe.objects.get(pk=2)
         self.michael = self.no_work_bread.author
 
     def test_title(self):
+        """Confirm basic (unrelated) model field is populated correctly."""
         self.assertEqual(self.no_work_bread.title, 'No Work Bread')
 
     def test_author_relationship(self):
+        """Confirm that loaded data is relating properly."""
         self.assertEqual(self.no_work_bread.author, self.michael)
 
     def test_parent_not_required(self):
+        """Confirm parent field may be none."""
         self.assertFalse(self.no_work_bread.parent)
 
 
@@ -78,12 +82,15 @@ class RecipeIngredientTest(TestCase):
 
 
 class Autocomplete(TestCase):
+    """Test autocomplete functionality."""
+    # load fixtures into test database
     fixtures = ['users.json',
                 'ingredients.json',
                 'recipes.json',
                 'recipeingredientrelationship']
 
     def setUp(self):
+        """Prepare for testing methods."""
         self.auth_user = UserFactory()
         username = self.auth_user.username
         password = 'this is the password'
@@ -95,9 +102,11 @@ class Autocomplete(TestCase):
         self.unauth_client = Client()
 
     def test_authenticated(self):
+        """Confirm authenticated client is authenticated."""
         self.assertTrue(self.loggedin)
 
     def test_autocomplete(self):
+        """Confirm autocomplete returning json with completions."""
         url = '/recipe/ingredient-autocomplete/'
         query = '?q=w'
         response = self.auth_client.get(''.join([url, query]))
