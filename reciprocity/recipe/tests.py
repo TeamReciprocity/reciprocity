@@ -20,6 +20,7 @@ class RecipeFactory(DjangoModelFactory):
         model = Recipe
 
     author = factory.SubFactory(UserFactory)
+    title = factory.Faker('name')
 
 
 class IngredientFactory(DjangoModelFactory):
@@ -27,6 +28,7 @@ class IngredientFactory(DjangoModelFactory):
     class Meta:
         model = Ingredient
 
+    name = factory.Faker('name')
 
 class RecipeIngredientFactory(DjangoModelFactory):
     """Instantiate a recipe-ingredient model instance for testing."""
@@ -59,6 +61,15 @@ class RecipeTest(TestCase):
         """Confirm parent field may be none."""
         self.assertFalse(self.no_work_bread.parent)
 
+    def test_variant_relationship(self):
+        """Confirm a new recipe can be a variant."""
+        self.variant = RecipeFactory(title='Fuzzy Ants on a log',
+                                     description='A zesty take on an old classic',
+                                     directions='Throw it all together, carefully.',
+                                     parent=self.ants_on_a_log)
+        self.assertEqual(self.variant, self.ants_on_a_log.variations.first())
+        self.assertEqual(self.variant.parent, self.ants_on_a_log)
+
 
 class IngredientTest(TestCase):
     """Test the Ingredient model."""
@@ -79,13 +90,28 @@ class IngredientTest(TestCase):
 
 class RecipeIngredientTest(TestCase):
     """Test the RecipeIngredientRelationship model."""
+    fixtures = ['users.json',
+                'ingredients.json',
+                'recipes.json',
+                'recipeingredientrelationship']
+
     def setUp(self):
         self.recipe_ingredient1 = RecipeIngredientFactory.build()
+        self.no_work_bread = Recipe.objects.get(pk=1)
+        self.ants_on_a_log = Recipe.objects.get(pk=2)
+        self.salt = Ingredient.objects.get(name='salt')
+        self.flour = Ingredient.objects.get(name='flour, white')
 
     def test_factory(self):
         """Confirm factory is creating recipe-ingredient model instances."""
         self.assertIsInstance(self.recipe_ingredient1,
                               RecipeIngredientRelationship)
+
+    def test_recipe_to_ingredient(self):
+        """Confirm a given recipe has a relationship to said ingredient."""
+        thru_table = RecipeIngredientRelationship.objects.filter(recipe=self.no_work_bread)
+        self.assertTrue(thru_table.filter(ingredient=self.salt))
+        self.assertEqual(self.no_work_bread.ingredients.first(), self.flour)
 
 
 class Autocomplete(TestCase):
@@ -112,7 +138,14 @@ class Autocomplete(TestCase):
         """Confirm authenticated client is authenticated."""
         self.assertTrue(self.loggedin)
 
-    def test_autocomplete(self):
+    def test_autocomplete_unauthenticated(self):
+        """Confirm unauthenticated client can not see autocomplete view."""
+        url = '/recipe/ingredient-autocomplete/'
+        query = '?q=w'
+        response = self.unauth_client.get(''.join([url, query]))
+        self.assertEqual(response.status_code, 302)
+
+    def test_autocomplete_authenticated(self):
         """Confirm autocomplete returning json with completions."""
         url = '/recipe/ingredient-autocomplete/'
         query = '?q=w'
