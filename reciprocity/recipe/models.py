@@ -38,7 +38,7 @@ class Ingredient(models.Model):
         """Display model instance."""
         return self.name
 
-    name = models.CharField(max_length=128, unique=True)
+    name = models.CharField(max_length=128)
 
 
 @python_2_unicode_compatible
