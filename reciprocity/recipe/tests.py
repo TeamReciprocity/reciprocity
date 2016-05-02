@@ -125,3 +125,24 @@ class Autocomplete(TestCase):
                     '"id": "w", "create_id": true}]}'
                     )
         self.assertEqual(response.content, expected)
+
+#     def test_autocomplete_can_create(self):
+#         """Confirm autocomplete can confirm records."""
+#         # no tomatoes to begin with
+#         queryset = Ingredient.objects.filter(name='tomatoes')
+#         self.assertFalse(queryset)
+#
+#         # get to help the csrf token pop
+#         url = '/recipe/ingredient-autocomplete/'
+#         query = '?q=tomatoes'
+#         get_response = self.auth_client.get(''.join([url, query]))
+#
+#
+#         # use client to post
+#         data = {'text': 'tomatoes', id: 200}
+#         url = '/recipe/ingredient-autocomplete/'
+#         post_response = self.auth_client.post(url, data)
+#
+#         # assert tomatoes
+#         queryset = Ingredient.objects.filter(name='tomatoes')
+#         self.assertTrue(queryset)
