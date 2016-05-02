@@ -1,0 +1,8 @@
+Thanks for registering with our site, the best site of all time.
+
+Click here to complete activation:
+http://{{site}}/accounts/activate/{{activation_key}}/.
+
+You have {{expiration_days}} days to activate.
+
+Share your recipes and get inspired!
