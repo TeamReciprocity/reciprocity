@@ -1,12 +1,25 @@
+from django.conf import settings
 from django.test import TestCase
 from factory.django import DjangoModelFactory
 from .models import Ingredient, Recipe, RecipeIngredientRelationship
+
+import factory
+
+
+class UserFactory(DjangoModelFactory):
+    """Instantiate a user model instance for testing."""
+    class Meta:
+        model = settings.AUTH_USER_MODEL
+
+    username = factory.Faker('first_name')
 
 
 class RecipeFactory(DjangoModelFactory):
     """Instantiate a recipe model instance for testing."""
     class Meta:
         model = Recipe
+
+    author = factory.SubFactory(UserFactory)
 
 
 class IngredientFactory(DjangoModelFactory):
@@ -20,6 +33,9 @@ class RecipeIngredientFactory(DjangoModelFactory):
     class Meta:
         model = RecipeIngredientRelationship
 
+    recipe = factory.SubFactory(RecipeFactory)
+    ingredient = factory.SubFactory(IngredientFactory)
+
 
 class RecipeTest(TestCase):
     """Test the Recipe model."""
@@ -29,6 +45,9 @@ class RecipeTest(TestCase):
     def test_factory(self):
         """Confirm factory is creating recipe model instances."""
         self.assertIsInstance(self.recipe1, Recipe)
+
+    def test_title(self):
+        self.assertEqual(self.recipe1.title, '')
 
 
 class IngredientTest(TestCase):

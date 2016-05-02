@@ -1,0 +1,51 @@
+[
+{
+    "model": "recipe.ingredient",
+    "pk": 1,
+    "fields": {
+        "name": "white flour"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 2,
+    "fields": {
+        "name": "water"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 3,
+    "fields": {
+        "name": "salt"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 4,
+    "fields": {
+        "name": "yeast"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 5,
+    "fields": {
+        "name": "celery"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 6,
+    "fields": {
+        "name": "raisins"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 7,
+    "fields": {
+        "name": "peanut butter"
+    }
+}
+]

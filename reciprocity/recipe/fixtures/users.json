@@ -1,0 +1,32 @@
+[
+    {
+        "model": "auth.User",
+        "pk": 1,
+        "fields": {
+            "username": "AJ",
+            "email": "aj@gmail.com",
+            "first_name": "AJ",
+            "last_name": "Wohlfert"
+        }
+    },
+    {
+        "model": "auth.User",
+        "pk": 2,
+        "fields": {
+            "username": "Hannah",
+            "email": "hannah@email.com",
+            "first_name": "Hannah",
+            "last_name": "Krager"
+        }
+    },
+    {
+        "model": "auth.User",
+        "pk": 3,
+        "fields": {
+            "username": "Michael",
+            "email": "michael@michaelstokley.com",
+            "first_name": "Michael",
+            "last_name": "Stokley"
+        }
+    }
+]
