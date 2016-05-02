@@ -62,12 +62,19 @@ class RecipeTest(TestCase):
 
 class IngredientTest(TestCase):
     """Test the Ingredient model."""
+    fixtures = ['ingredients.json']
+
     def setUp(self):
-        self.ingredient1 = IngredientFactory.build()
+        self.yeast = Ingredient.objects.get(pk=4)
+        self.ingredient1 = IngredientFactory()
 
     def test_factory(self):
         """Confirm factory is creating ingredient model instances."""
         self.assertIsInstance(self.ingredient1, Ingredient)
+
+    def test_name(self):
+        """Test basic field for model instance."""
+        self.assertEqual(self.yeast.name, 'yeast')
 
 
 class RecipeIngredientTest(TestCase):
