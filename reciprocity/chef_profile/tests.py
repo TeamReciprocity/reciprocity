@@ -79,6 +79,13 @@ class BasicUserProfileCase(SingleUserCase):
         """Test that counting the active manager returns expected int."""
         self.assertEqual(ChefProfile.active.count(), 1)
 
+    def test_about_me(self):
+        """Test that User.profile.about_me can be added as expected."""
+        self.assertIsNone(self.user.profile.about_me)
+        self.user.profile.about_me = 'Here is something about me'
+        self.user.save()
+        self.assertEqual(self.user.profile.about_me, 'Here is something about me')
+
 
 class ManyUsersCase(TestCase):
     """Test cases where many Users are registered."""
@@ -90,12 +97,3 @@ class ManyUsersCase(TestCase):
     def test_active_count(self):
         """Make sure that the active user count is the expected size."""
         self.assertEqual(ChefProfile.active.count(), USER_BATCH_SIZE)
-
-# test favorites:
-# assert favorites is None
-# create recipe, add to favorites
-# assert recipe in favorites
-
-# test likes/dislikes
-# need ingredient factory
-# test like favorites

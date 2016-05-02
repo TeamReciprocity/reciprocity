@@ -17,10 +17,18 @@ class ActiveManager(models.Manager):
 class ChefProfile(models.Model):
     """Extend the Django user profile for reciprocity project."""
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='profile')
-    favorites = models.ManyToManyField(Recipe, related_name='favorite_of')
-    liked_ingredients = models.ManyToManyField(Ingredient, related_name='liked_by')
-    disliked_ingredients = models.ManyToManyField(Ingredient, related_name='disliked_by')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
+                                related_name='profile')
+    favorites = models.ManyToManyField(Recipe,
+                                       related_name='favorite_of',
+                                       blank=True)
+    liked_ingredients = models.ManyToManyField(Ingredient,
+                                               related_name='liked_by',
+                                               blank=True)
+    disliked_ingredients = models.ManyToManyField(Ingredient,
+                                                  related_name='disliked_by',
+                                                  blank=True)
+    about_me = models.TextField(null=True, blank=True, )
 
     objects = models.Manager()
     active = ActiveManager()
