@@ -1,0 +1,30 @@
+[
+{
+    "model": "recipe.recipe",
+    "pk": 1,
+    "fields": {
+        "title": "No Work Bread",
+        "description": "Adapted from Jim Lahey's recipe.",
+        "prep_time": 4.0,
+        "cook_time": 1.0,
+        "author": 3,
+        "privacy": "pu",
+        "directions": "1. Combine ingredients, briefly 2. Cover and let sit 18+ hours at room temperature 3. Fold over two or three times 4. Preheat oven to 450\u00b0, including covered baking vessel 5. Turn dough into vessel and bake 30 minutes covered, 25 minutes uncovered",
+        "parent": null
+    }
+},
+{
+    "model": "recipe.recipe",
+    "pk": 2,
+    "fields": {
+        "title": "Ants on a log",
+        "description": "This is a fun snack that kids can make.",
+        "prep_time": 0.5,
+        "cook_time": 0.25,
+        "author": 1,
+        "privacy": "pu",
+        "directions": "Cut the celery stalks in half. Spread with peanut butter. Sprinkle with raisins.",
+        "parent": null
+    }
+}
+]
