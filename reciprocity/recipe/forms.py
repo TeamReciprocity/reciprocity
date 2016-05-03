@@ -27,10 +27,10 @@ class RecipeForm(ModelForm):
         ]
 
 
-RecipeIngredientRelationshipInlineFormSet = inlineformset_factory(
-    Recipe,
-    RecipeIngredientRelationship, fields=('ingredient', 'quantity', ),
-)
+# RecipeIngredientRelationshipInlineFormSet = inlineformset_factory(
+#     Recipe,
+#     RecipeIngredientRelationship, fields=('ingredient', 'quantity', ),
+# )
 
 RecipeIngredientRelationshipFormSet = modelformset_factory(
     RecipeIngredientRelationship,

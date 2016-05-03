@@ -39,12 +39,17 @@ class AddRecipe(CreateView):
 
 def add_recipe(request):
     if request.method == 'POST':
-        formset = RecipeIngredientRelationshipFormSet(
-            request.POST,
-        )
-        if formset.is_valid():
-            formset.save()
-            return HttpResponseRedirect()
+        form = RecipeForm(request.POST)
+        formset = RecipeIngredientRelationshipFormSet(request.POST)
+        if formset.is_valid() and form.is_valid():
+            form.instance.author = request.user
+            form.save()
+            for ingredient in formset.cleaned_data:
+                new = RecipeIngredientRelationship(recipe=form.instance,
+                                                   quantity=ingredient['quantity'],
+                                                   ingredient=ingredient['ingredient'])
+                new.save()
+            return HttpResponseRedirect('/')
     else:
         recipe_form = RecipeForm()
         formset = RecipeIngredientRelationshipFormSet(
