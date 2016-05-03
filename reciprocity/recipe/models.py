@@ -75,6 +75,7 @@ class Recipe(models.Model):
         Ingredient,
         through='RecipeIngredientRelationship'
     )
+    created = models.DateTimeField(auto_now_add=True)
 
 
 @python_2_unicode_compatible

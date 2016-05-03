@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}
+Reciprocity - Home
+{% endblock %}
+
+{% block content %}
+    <h1>Hello World!</h1>
+    {% for recipe in latest_recipes.all %}
+    <p>{{ recipe.title }}</p>
+    {% endfor %}
+{% endblock %}
