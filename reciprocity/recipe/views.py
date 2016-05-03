@@ -1,6 +1,9 @@
 from dal import autocomplete
-from django.views.generic.edit import FormView
-from .models import Ingredient
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.views.generic.edit import CreateView
+from .forms import RecipeIngredientRelationshipFormSet, RecipeForm
+from .models import Ingredient, Recipe, RecipeIngredientRelationship
 
 
 class IngredientAutocomplete(autocomplete.Select2QuerySetView):
@@ -13,5 +16,25 @@ class IngredientAutocomplete(autocomplete.Select2QuerySetView):
         return qs
 
 
-class AddRecipe(FormView):
-    template_name = ''
+def add_recipe(request):
+    if request.method == 'POST':
+        form = RecipeForm(request.POST)
+        formset = RecipeIngredientRelationshipFormSet(request.POST)
+        if formset.is_valid() and form.is_valid():
+            form.instance.author = request.user
+            form.save()
+            for ingredient in formset.cleaned_data:
+                new = RecipeIngredientRelationship(recipe=form.instance,
+                                                   quantity=ingredient['quantity'],
+                                                   ingredient=ingredient['ingredient'])
+                new.save()
+            return HttpResponseRedirect('/')
+    else:
+        recipe_form = RecipeForm()
+        formset = RecipeIngredientRelationshipFormSet(
+            queryset=RecipeIngredientRelationship.objects.none()
+        )
+    return render(request,
+                  'recipe/add-recipe.html',
+                  {'recipe_form': recipe_form,
+                   'formset': formset})

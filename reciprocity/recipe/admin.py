@@ -7,7 +7,7 @@ class RecipeIngredientRelationshipInline(admin.TabularInline):
     form = IngredientForm
     model = RecipeIngredientRelationship
     extra = 1
-    
+
 
 class RecipeAdmin(admin.ModelAdmin):
     inlines = (RecipeIngredientRelationshipInline,)
