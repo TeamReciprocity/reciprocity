@@ -6,8 +6,9 @@ Reciprocity - Add Recipe
 <form method="post">
   {% csrf_token %}
   {{ recipe_form }}
-  {{ recipe_ingredient_relationship_form }}
-  {{ bugaboo_form }}
+  <table>
+  {{ formset }}
+  </table>
   <button type="submit" name="button" value="Submit">Save Recipe</button>
 </form>
 {% endblock %}
