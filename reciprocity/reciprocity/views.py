@@ -4,7 +4,7 @@ from recipe.models import Recipe
 
 class HomeView(TemplateView):
     """Home page view showing latest recipes."""
-    template_name = 'home.html'
+    template_name = 'reciprocity/home.html'
 
     def get_context_data(self, *args, **kwargs):
         context_data = super(HomeView, self).get_context_data(*args, **kwargs)
