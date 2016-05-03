@@ -1,6 +1,6 @@
 from .models import Ingredient, Recipe, RecipeIngredientRelationship
 from dal import autocomplete
-from django.forms import inlineformset_factory, ModelChoiceField, ModelForm
+from django.forms import inlineformset_factory, modelformset_factory, ModelChoiceField, ModelForm
 
 
 class IngredientForm(ModelForm):
@@ -27,8 +27,13 @@ class RecipeForm(ModelForm):
         ]
 
 
-RecipeIngredientRelationshipFormSet = inlineformset_factory(
+RecipeIngredientRelationshipInlineFormSet = inlineformset_factory(
     Recipe,
     RecipeIngredientRelationship, fields=('ingredient', 'quantity', ),
-    extra=1,
+)
+
+RecipeIngredientRelationshipFormSet = modelformset_factory(
+    RecipeIngredientRelationship,
+    fields=('ingredient', 'quantity'),
+    extra=2,
 )
