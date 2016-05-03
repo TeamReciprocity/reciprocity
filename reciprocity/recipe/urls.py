@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import AddRecipe, add_recipe, IngredientAutocomplete, Ingredient
+from .views import add_recipe, IngredientAutocomplete, Ingredient
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
