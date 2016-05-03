@@ -1,0 +1,14 @@
+{% extends 'reciprocity/base.html' %}
+{% block title %}
+Reciprocity - Add Recipe
+{% endblock %}
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  {{ recipe_form }}
+  <table>
+  {{ formset }}
+  </table>
+  <button type="submit" name="button" value="Submit">Save Recipe</button>
+</form>
+{% endblock %}

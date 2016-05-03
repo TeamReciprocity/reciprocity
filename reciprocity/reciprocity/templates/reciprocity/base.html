@@ -36,7 +36,7 @@
               <li><a href="{% url 'registration_register' %}">Register</a></li>
               {% else %}
               <li><a href="/">My Recipes</a></li>
-              <li><a href="/">Add a Recipe</a></li>
+              <li><a href="{% url 'add-recipe' %}">Add a Recipe</a></li>
               <li><a href="/">Profile</a></li>
               <li><a href="{% url 'auth_logout' %}">Logout</a></li>
               {% endif %}
