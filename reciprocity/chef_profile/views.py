@@ -25,4 +25,4 @@ def edit_profile(request):
             profile_form.save()
             return HttpResponseRedirect('/profile/')
     context = {'user_form': user_form, 'profile_form': profile_form}
-    return render(request, 'imager_profile/edit_profile.html', context)
+    return render(request, 'chef_profile/edit_profile.html', context)

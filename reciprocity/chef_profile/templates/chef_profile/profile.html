@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "reciprocity/base.html" %}
 
 {% block title %}
 Profile View
@@ -11,9 +11,7 @@ Profile View
   <p>First Name: {{user.first_name}}</p>
 
   <p>Last Name: {{user.last_name}}</p>
-  <p>Ingredients you like: {{user.profile.liked_ingredients}}</p>
 
-  <p>ingredients you do not like: {{user.profile.disliked_ingredients}}</p>
   <p>About Me: {{user.profile.about_me}}</p>
   {% if user.recipes %}
   <h2>You have recipes!</h2>
