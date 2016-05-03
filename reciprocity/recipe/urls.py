@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from recipe.views import IngredientAutocomplete, Ingredient
+from .views import AddRecipe, IngredientAutocomplete, Ingredient
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
                                                       create_field='name')),
         name='ingredient-autocomplete',
     ),
+    url(r'add/$', login_required(AddRecipe.as_view()), name='add-recipe'),
 ]

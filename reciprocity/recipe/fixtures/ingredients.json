@@ -47,5 +47,89 @@
     "fields": {
         "name": "peanut butter"
     }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 8,
+    "fields": {
+        "name": "bacon"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 9,
+    "fields": {
+        "name": "onions"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 10,
+    "fields": {
+        "name": "bell peppers"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 11,
+    "fields": {
+        "name": "chicken, roasting"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 12,
+    "fields": {
+        "name": "black beans, dry"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 13,
+    "fields": {
+        "name": "tomatoes"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 14,
+    "fields": {
+        "name": "chipotle peppers, canned, in adobo sauce"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 15,
+    "fields": {
+        "name": "cocoa powder"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 16,
+    "fields": {
+        "name": "garlic"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 18,
+    "fields": {
+        "name": "oregano"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 19,
+    "fields": {
+        "name": "paprika"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 20,
+    "fields": {
+        "name": "cumin"
+    }
 }
 ]

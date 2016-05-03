@@ -61,5 +61,113 @@
         "ingredient": 7,
         "quantity": "1/3 cup"
     }
+},
+{
+    "model": "recipe.recipeingredientrelationship",
+    "pk": 8,
+    "fields": {
+        "recipe": 3,
+        "ingredient": 8,
+        "quantity": "1/2 - 1 lb"
+    }
+},
+{
+    "model": "recipe.recipeingredientrelationship",
+    "pk": 9,
+    "fields": {
+        "recipe": 3,
+        "ingredient": 9,
+        "quantity": "3"
+    }
+},
+{
+    "model": "recipe.recipeingredientrelationship",
+    "pk": 10,
+    "fields": {
+        "recipe": 3,
+        "ingredient": 10,
+        "quantity": "5"
+    }
+},
+{
+    "model": "recipe.recipeingredientrelationship",
+    "pk": 11,
+    "fields": {
+        "recipe": 3,
+        "ingredient": 11,
+        "quantity": "1"
+    }
+},
+{
+    "model": "recipe.recipeingredientrelationship",
+    "pk": 12,
+    "fields": {
+        "recipe": 3,
+        "ingredient": 12,
+        "quantity": "3 - 4 cups"
+    }
+},
+{
+    "model": "recipe.recipeingredientrelationship",
+    "pk": 13,
+    "fields": {
+        "recipe": 3,
+        "ingredient": 13,
+        "quantity": "2 big (54 oz.) cans"
+    }
+},
+{
+    "model": "recipe.recipeingredientrelationship",
+    "pk": 14,
+    "fields": {
+        "recipe": 3,
+        "ingredient": 14,
+        "quantity": "1 can"
+    }
+},
+{
+    "model": "recipe.recipeingredientrelationship",
+    "pk": 15,
+    "fields": {
+        "recipe": 3,
+        "ingredient": 15,
+        "quantity": "1 - 2 T"
+    }
+},
+{
+    "model": "recipe.recipeingredientrelationship",
+    "pk": 16,
+    "fields": {
+        "recipe": 3,
+        "ingredient": 16,
+        "quantity": "7 cloves"
+    }
+},
+{
+    "model": "recipe.recipeingredientrelationship",
+    "pk": 17,
+    "fields": {
+        "recipe": 3,
+        "ingredient": 18,
+        "quantity": "to taste"
+    }
+},
+{
+    "model": "recipe.recipeingredientrelationship",
+    "pk": 18,
+    "fields": {
+        "recipe": 3,
+        "ingredient": 19,
+        "quantity": "to taste"
+    }
+},
+{
+    "model": "recipe.recipeingredientrelationship",
+    "pk": 19,
+    "fields": {
+        "recipe": 3,
+        "ingredient": 20,
+        "quantity": "to taste"
+    }
 }
 ]

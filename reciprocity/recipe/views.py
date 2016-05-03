@@ -1,8 +1,6 @@
-from django.shortcuts import render
 from dal import autocomplete
-from recipe.models import Ingredient
-
-# Create your views here.
+from django.views.generic.edit import FormView
+from .models import Ingredient
 
 
 class IngredientAutocomplete(autocomplete.Select2QuerySetView):
@@ -13,3 +11,7 @@ class IngredientAutocomplete(autocomplete.Select2QuerySetView):
         if self.q:
             qs = qs.filter(name__istartswith=self.q)
         return qs
+
+
+class AddRecipe(FormView):
+    template_name = ''
