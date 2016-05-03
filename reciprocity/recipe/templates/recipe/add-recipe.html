@@ -7,8 +7,11 @@ Reciprocity - Add Recipe
   {% csrf_token %}
   {{ recipe_form }}
   <table>
-  {{ formset }}
+  {{ formset.as_p }}
   </table>
   <button type="submit" name="button" value="Submit">Save Recipe</button>
 </form>
+{% endblock %}
+{% block scripts %}
+{{ formset.media }}
 {% endblock %}

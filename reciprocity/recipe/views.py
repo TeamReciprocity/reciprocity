@@ -24,10 +24,11 @@ def add_recipe(request):
             form.instance.author = request.user
             form.save()
             for ingredient in formset.cleaned_data:
-                new = RecipeIngredientRelationship(recipe=form.instance,
-                                                   quantity=ingredient['quantity'],
-                                                   ingredient=ingredient['ingredient'])
-                new.save()
+                if ingredient:
+                    new = RecipeIngredientRelationship(recipe=form.instance,
+                                                       quantity=ingredient['quantity'],
+                                                       ingredient=ingredient['ingredient'])
+                    new.save()
             return HttpResponseRedirect('/')
     else:
         recipe_form = RecipeForm()
