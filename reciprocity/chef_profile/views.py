@@ -7,7 +7,7 @@ from .forms import UserForm, ChefProfileForm
 
 
 class ProfileView(TemplateView):
-    template_name = 'profile.html'
+    template_name = 'chef_profile/profile.html'
 
 
 def edit_profile(request):
