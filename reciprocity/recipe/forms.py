@@ -1,10 +1,10 @@
-from .models import Ingredient, Recipe
+from .models import Ingredient, Recipe, RecipeIngredientRelationship
 from dal import autocomplete
-from django import forms
+from django.forms import inlineformset_factory, ModelChoiceField, ModelForm
 
 
-class IngredientForm(forms.ModelForm):
-    ingredient = forms.ModelChoiceField(
+class IngredientForm(ModelForm):
+    ingredient = ModelChoiceField(
         queryset=Ingredient.objects.all(),
         widget=autocomplete.ModelSelect2(url='ingredient-autocomplete')
     )
@@ -14,7 +14,7 @@ class IngredientForm(forms.ModelForm):
         fields = ('__all__')
 
 
-class RecipeForm(forms.ModelForm):
+class RecipeForm(ModelForm):
     class Meta:
         model = Recipe
         fields = [
@@ -24,5 +24,11 @@ class RecipeForm(forms.ModelForm):
             'cook_time',
             'privacy',
             'directions',
-            'ingredients',
         ]
+
+
+RecipeIngredientRelationshipFormSet = inlineformset_factory(
+    Recipe,
+    RecipeIngredientRelationship, fields=('ingredient', 'quantity', ),
+    extra=1,
+)
