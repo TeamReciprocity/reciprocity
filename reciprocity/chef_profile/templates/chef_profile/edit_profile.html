@@ -1,0 +1,23 @@
+{% extends "reciprocity/base.html" %}
+
+{% block title %}
+  Edit {{form.model}}
+{% endblock %}
+
+{% block content %}
+
+<form method='post' action='.'>
+{% csrf_token %}
+<table>
+  {{ user_form.as_table }}
+
+  {{ profile_form.as_table }}
+</table>
+
+<input type="submit" value='Save'>
+<a href="{% url 'profile' %}"><button type="button">Cancel</button></a>
+
+
+</form>
+
+{% endblock %}

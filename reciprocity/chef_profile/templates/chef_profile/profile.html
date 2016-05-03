@@ -1,0 +1,24 @@
+{% extends "reciprocity/base.html" %}
+
+{% block title %}
+Profile View
+{% endblock %}
+
+{% block content %}
+  <h3>{{user.username}}'s Profile</h3>
+  <p><a href="/profile/edit">Edit</a></p>
+
+  <p>First Name: {{user.first_name}}</p>
+
+  <p>Last Name: {{user.last_name}}</p>
+
+  <p>About Me: {{user.profile.about_me}}</p>
+  {% if user.recipes %}
+  <h2>You have recipes!</h2>
+  {% else %}
+  <h2>You have no recipes</h2>
+
+  {% endif %}
+
+
+{% endblock %}
