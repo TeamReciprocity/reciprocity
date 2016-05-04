@@ -47,5 +47,25 @@ def edit_recipe(request, **kwargs):
     template = 'recipe/add-recipe.html'
     pk = kwargs.get('pk')
     recipe = Recipe.objects.get(pk=pk)
-    import pdb; pdb.set_trace()
-    formset = RecipeIngredientRelationshipFormSet(queryset='')
+    if request.method == 'POST':
+        form = RecipeForm(request.POST)
+        formset = RecipeIngredientRelationshipFormSet(request.POST, prefix='ingredient_form')
+        if formset.is_valid() and form.is_valid():
+            for ingredient in formset.cleaned_data:
+                # import pdb; pdb.set_trace()
+                if ingredient:
+                    if ingredient['id']:
+                        rel_id = RecipeIngredientRelationship.objects.get(id=ingredient['id'].id)
+                        # update relationship
+                        pass
+                    else:
+                        new = RecipeIngredientRelationship(recipe=recipe,
+                                               quantity=ingredient['quantity'],
+                                               ingredient=ingredient['ingredient'])
+                        new.save()
+            return HttpResponseRedirect('/')
+    else:
+        recipe_form = RecipeForm(instance=recipe)
+        formset = RecipeIngredientRelationshipFormSet(queryset=recipe.ingredients_in_recipe.all(), prefix='ingredient_form')
+
+    return render(request, template, {'formset': formset, 'recipe_form': recipe_form})
