@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from .views import add_recipe, IngredientAutocomplete, Ingredient, edit_recipe
 from django.contrib.auth.decorators import login_required
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
@@ -24,11 +25,7 @@ urlpatterns = [
         )),
         name='view-recipe'),
     url(r'^edit/(?P<pk>[0-9]+)/$',
-        login_required(DetailView.as_view(
-            model=Recipe,
-            template_name='recipe/edit-recipe.html'
-        )),
-        name='edit-recipe'),
+        login_required(edit_recipe), name='edit-recipe'),
     url(r'^vary/(?P<pk>[0-9]+)/$',
         login_required(DetailView.as_view(
             model=Recipe,

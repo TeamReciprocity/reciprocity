@@ -8,7 +8,9 @@ Reciprocity - Add Recipe
   {{ recipe_form }}
   <table border="0" cellpadding="0" cellspacing="0">
      <tbody>
+         {{ formset.management_form }}
          {% for form in formset.forms %}
+         {{ form.id }}
          <tr>
             <td class="ingredient_name">{{ form.ingredient }}</td>
             <td>{{ form.quantity }}</td>
@@ -16,7 +18,7 @@ Reciprocity - Add Recipe
          {% endfor %}
      </tbody>
  </table>
-  {{ formset.management_form }}
+
 <button class="btn btn-default" type="button" id="add_more">Add Ingredients</button>
 <div class="row">
     <div class="col-md-5"></div>
