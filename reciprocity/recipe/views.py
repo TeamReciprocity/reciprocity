@@ -40,3 +40,12 @@ def add_recipe(request):
                   'recipe/add-recipe.html',
                   {'recipe_form': recipe_form,
                    'formset': formset})
+
+
+def edit_recipe(request, **kwargs):
+    """Handle edit of existing recipe."""
+    template = 'recipe/add-recipe.html'
+    pk = kwargs.get('pk')
+    recipe = Recipe.objects.get(pk=pk)
+    import pdb; pdb.set_trace()
+    formset = RecipeIngredientRelationshipFormSet(queryset='')
