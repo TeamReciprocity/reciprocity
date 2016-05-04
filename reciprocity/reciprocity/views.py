@@ -8,5 +8,6 @@ class HomeView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context_data = super(HomeView, self).get_context_data(*args, **kwargs)
-        context_data['latest_recipes'] = Recipe.objects.order_by('-created')[:10]
+        queryset = Recipe.objects.filter(privacy='pu')
+        context_data['latest_recipes'] = queryset.order_by('-created')[:10]
         return context_data
