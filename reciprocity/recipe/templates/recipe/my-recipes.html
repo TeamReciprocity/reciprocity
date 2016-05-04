@@ -1,0 +1,10 @@
+{% extends 'reciprocity/base.html' %}
+{% block title %}
+Reciprocity - My Recipes
+{% endblock %}
+
+{% block content %}
+{% for recipe in object_list %}
+<p> <a href="{% url 'view-recipe' pk=recipe.pk %}">{{ recipe }}</a> </p>
+{% endfor %}
+{% endblock %}

@@ -10,8 +10,8 @@ Reciprocity - Add Recipe
      <tbody>
          {{ formset.management_form }}
          {% for form in formset.forms %}
+         {{ form.id }}
          <tr>
-            {{ form.id }}
             <td class="ingredient_name">{{ form.ingredient }}</td>
             <td>{{ form.quantity }}</td>
          </tr>
