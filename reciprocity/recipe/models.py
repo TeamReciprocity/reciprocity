@@ -26,7 +26,7 @@ TIME_CHOICES = (
 PRIVACY_CHOICES = (
     ('pu', 'Public'),
     ('pr', 'Private'),
-    ('fr', 'Friends Only'),
+    # ('fr', 'Friends Only'),
 )
 
 
