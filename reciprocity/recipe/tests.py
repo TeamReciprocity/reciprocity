@@ -45,7 +45,7 @@ class RecipeIngredientFactory(DjangoModelFactory):
     ingredient = factory.SubFactory(IngredientFactory)
 
 
-class RecipeTest(TestCase):
+class RecipeModelTest(TestCase):
     """Test the Recipe model."""
     fixtures = ['users.json', 'recipes.json']
 
@@ -77,7 +77,7 @@ class RecipeTest(TestCase):
         self.assertEqual(self.variant.parent, self.ants_on_a_log)
 
 
-class IngredientTest(TestCase):
+class IngredientModelTest(TestCase):
     """Test the Ingredient model."""
     fixtures = ['ingredients.json']
 
@@ -94,7 +94,7 @@ class IngredientTest(TestCase):
         self.assertEqual(self.yeast.name, 'yeast')
 
 
-class RecipeIngredientTest(TestCase):
+class RecipeIngredientModelTest(TestCase):
     """Test the RecipeIngredientRelationship model."""
     fixtures = ['users.json',
                 'ingredients.json',
@@ -122,13 +122,38 @@ class RecipeIngredientTest(TestCase):
         self.assertEqual(self.no_work_bread.ingredients.first(), self.flour)
 
 
-class ViewMyRecipes(TestCase):
+class TestView(TestCase):
+    """Generic class for testing views."""
     def setUp(self):
+        """Provide user and client authenticated as user."""
         self.user = UserFactory()
         self.user.set_password(PASSWORD)
         self.user.save()
         self.client = Client()
         self.client.login(username=self.user, password=PASSWORD)
+
+
+class ViewMyFavorites(TestView):
+    def setUp(self):
+        super(ViewMyFavorites, self).setUp()
+        self.favorite_recipe = RecipeFactory()
+        self.favorite_recipe.favorite_of.add(self.user.profile)
+        self.unfavorited_recipe = RecipeFactory()
+
+    def test_including(self):
+        """Confirm view lists user's favorite recipes."""
+        response = self.client.get('/recipe/view/favorites/')
+        self.assertIn(str(self.favorite_recipe), response.content)
+
+    def test_excluding(self):
+        """Confirm view excludes unfavorited recipes."""
+        response = self.client.get('/recipe/view/favorites/')
+        self.assertNotIn(str(self.unfavorited_recipe), response.content)
+
+
+class ViewMyRecipes(TestView):
+    def setUp(self):
+        super(ViewMyRecipes, self).setUp()
         self.authored_recipe = RecipeFactory(author=self.user)
         self.unauthored_recipe = RecipeFactory(author=UserFactory())
 
@@ -143,34 +168,25 @@ class ViewMyRecipes(TestCase):
         self.assertNotIn(str(self.unauthored_recipe), response.content)
 
 
-class ViewRecipe(TestCase):
+class ViewRecipe(TestView):
     def setUp(self):
         """Prepare for test methods."""
-        author = UserFactory(username='author')
-        author.set_password(PASSWORD)
-        author.save()
+        super(ViewRecipe, self).setUp()
         non_author = UserFactory(username='non-author')
         non_author.set_password(PASSWORD)
         non_author.save()
-        self.author_client = Client()
-        self.loggedin = self.author_client.login(username=author.username,
-                                                 password=PASSWORD)
         self.non_author_client = Client()
         self.non_author_client.login(username=non_author.username,
                                      password=PASSWORD)
-        self.public_recipe = RecipeFactory(author=author, privacy='pu')
-        self.private_recipe = RecipeFactory(author=author, privacy='pr')
-
-    def test_client_authorized(self):
-        """Confirm client is logged in."""
-        self.assertTrue(self.loggedin)
+        self.public_recipe = RecipeFactory(author=self.user, privacy='pu')
+        self.private_recipe = RecipeFactory(author=self.user, privacy='pr')
 
     def test_authored_public(self):
         """Confirm author can view public authored recipe."""
         url = ''.join(['/recipe/view/',
                        str(self.public_recipe.pk),
                        '/'])
-        response = self.author_client.get(url)
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_authored_private(self):
@@ -178,7 +194,7 @@ class ViewRecipe(TestCase):
         url = ''.join(['/recipe/view/',
                        str(self.private_recipe.pk),
                        '/'])
-        response = self.author_client.get(url)
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_unauthored_public(self):
