@@ -7,6 +7,6 @@ Reciprocity - Home
 {% block content %}
     <h1>Hello World!</h1>
     {% for recipe in latest_recipes.all %}
-    <p>{{ recipe.title }}</p>
+    <a href="{% url 'view-recipe' pk=recipe.pk %}">{{ recipe.title }}</a>
     {% endfor %}
 {% endblock %}

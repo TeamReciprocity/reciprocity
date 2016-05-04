@@ -87,6 +87,6 @@ class RecipeIngredientRelationship(models.Model):
         return 'Recipe: {}, Ingredient: {}'.format(self.recipe,
                                                    self.ingredient)
 
-    recipe = models.ForeignKey(Recipe)
+    recipe = models.ForeignKey(Recipe, related_name='ingredients_in_recipe')
     ingredient = models.ForeignKey(Ingredient)
     quantity = models.CharField(max_length=128)
