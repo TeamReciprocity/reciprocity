@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from factory.django import DjangoModelFactory
 from .models import Ingredient, Recipe, RecipeIngredientRelationship
@@ -29,6 +30,7 @@ class IngredientFactory(DjangoModelFactory):
         model = Ingredient
 
     name = factory.Faker('name')
+
 
 class RecipeIngredientFactory(DjangoModelFactory):
     """Instantiate a recipe-ingredient model instance for testing."""
@@ -112,6 +114,62 @@ class RecipeIngredientTest(TestCase):
         thru_table = RecipeIngredientRelationship.objects.filter(recipe=self.no_work_bread)
         self.assertTrue(thru_table.filter(ingredient=self.salt))
         self.assertEqual(self.no_work_bread.ingredients.first(), self.flour)
+
+
+class ViewRecipe(TestCase):
+    def setUp(self):
+        """Prepare for test methods."""
+        password = 'this is the password'
+        author = UserFactory(username='author')
+        author.set_password(password)
+        author.save()
+        non_author = UserFactory(username='non-author')
+        non_author.set_password(password)
+        non_author.save()
+        self.author_client = Client()
+        self.loggedin = self.author_client.login(username=author.username,
+                                                 password=password)
+        self.non_author_client = Client()
+        self.non_author_client.login(username=non_author.username,
+                                     password=password)
+        self.public_recipe = RecipeFactory(author=author, privacy='pu')
+        self.private_recipe = RecipeFactory(author=author, privacy='pr')
+
+    def test_client_authorized(self):
+        """Confirm client is logged in."""
+        self.assertTrue(self.loggedin)
+
+    def test_authored_public(self):
+        """Confirm author can view public authored recipe."""
+        url = ''.join(['/recipe/view/',
+                       str(self.public_recipe.pk),
+                       '/'])
+        response = self.author_client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_authored_private(self):
+        """Confirm author can view private authored recipe."""
+        url = ''.join(['/recipe/view/',
+                       str(self.private_recipe.pk),
+                       '/'])
+        response = self.author_client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_unauthored_public(self):
+        """Confirm non-author can view public recipe."""
+        url = ''.join(['/recipe/view/',
+                       str(self.public_recipe.pk),
+                       '/'])
+        response = self.non_author_client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_unauthored_private(self):
+        """Confirm non-author cannot view private recipe."""
+        url = ''.join(['/recipe/view/',
+                       str(self.private_recipe.pk),
+                       '/'])
+        response = self.non_author_client.get(url)
+        self.assertEqual(response.status_code, 404)
 
 
 class Autocomplete(TestCase):

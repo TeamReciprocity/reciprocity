@@ -1,9 +1,18 @@
 from dal import autocomplete
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.views.generic.edit import CreateView
+from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.views.generic.detail import DetailView
 from .forms import RecipeIngredientRelationshipFormSet, RecipeForm
-from .models import Ingredient, Recipe, RecipeIngredientRelationship
+from .models import Ingredient, RecipeIngredientRelationship
+
+
+class RecipeDetailView(DetailView):
+    def get_object(self, queryset=None):
+        """Secure private recipes."""
+        recipe = super(DetailView, self).get_object()
+        if recipe.privacy != 'pu' and self.request.user.pk != recipe.author.pk:
+            raise Http404
+        return recipe
 
 
 class IngredientAutocomplete(autocomplete.Select2QuerySetView):
@@ -24,9 +33,11 @@ def add_recipe(request):
             form.instance.author = request.user
             form.save()
             for ingredient in formset.cleaned_data:
-                new = RecipeIngredientRelationship(recipe=form.instance,
-                                                   quantity=ingredient['quantity'],
-                                                   ingredient=ingredient['ingredient'])
+                new = RecipeIngredientRelationship(
+                    recipe=form.instance,
+                    quantity=ingredient['quantity'],
+                    ingredient=ingredient['ingredient']
+                )
                 new.save()
             return HttpResponseRedirect('/')
     else:
