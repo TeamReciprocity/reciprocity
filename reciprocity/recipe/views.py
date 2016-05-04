@@ -48,20 +48,22 @@ def edit_recipe(request, **kwargs):
     pk = kwargs.get('pk')
     recipe = Recipe.objects.get(pk=pk)
     if request.method == 'POST':
-        form = RecipeForm(request.POST)
+        form = RecipeForm(request.POST, instance=recipe)
         formset = RecipeIngredientRelationshipFormSet(request.POST, prefix='ingredient_form')
         if formset.is_valid() and form.is_valid():
+
+            form.save()
             for ingredient in formset.cleaned_data:
-                # import pdb; pdb.set_trace()
                 if ingredient:
                     if ingredient['id']:
-                        rel_id = RecipeIngredientRelationship.objects.get(id=ingredient['id'].id)
-                        # update relationship
-                        pass
+                        relationship = RecipeIngredientRelationship.objects.get(id=ingredient['id'].id)
+                        relationship.quantity = ingredient['quantity']
+                        relationship.ingredient = ingredient['ingredient']
+                        relationship.save()
                     else:
                         new = RecipeIngredientRelationship(recipe=recipe,
-                                               quantity=ingredient['quantity'],
-                                               ingredient=ingredient['ingredient'])
+                                                           quantity=ingredient['quantity'],
+                                                           ingredient=ingredient['ingredient'])
                         new.save()
             return HttpResponseRedirect('/')
     else:
