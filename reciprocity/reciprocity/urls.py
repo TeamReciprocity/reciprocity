@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^recipe/', include('recipe.urls')),
     url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^profile/', include('chef_profile.urls')),
 ]

@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.test import TestCase
 from django.db.models import QuerySet, Manager
+from recipe.tests import RecipeFactory, IngredientFactory
 from .models import ChefProfile
 import factory
 
@@ -49,6 +50,9 @@ class SingleUserCase(TestCase):
     def setUp(self):
         """Create a user for testing."""
         self.user = UserFactory.create()
+        self.recipe = RecipeFactory.create()
+        self.ingredient1 = IngredientFactory.create()
+        self.ingredient2 = IngredientFactory.create()
 
 
 class BasicUserProfileCase(SingleUserCase):
@@ -77,7 +81,7 @@ class BasicUserProfileCase(SingleUserCase):
 
     def test_active_count(self):
         """Test that counting the active manager returns expected int."""
-        self.assertEqual(ChefProfile.active.count(), 1)
+        self.assertEqual(ChefProfile.active.count(), 2)
 
     def test_about_me(self):
         """Test that User.profile.about_me can be added as expected."""
@@ -86,6 +90,23 @@ class BasicUserProfileCase(SingleUserCase):
         self.user.save()
         self.assertEqual(self.user.profile.about_me, 'Here is something about me')
 
+    def test_favorites(self):
+        """Ensure a user can have a favorite recipe."""
+        self.assertNotIn(self.recipe, self.user.profile.favorites.all())
+        self.user.profile.favorites.add(self.recipe)
+        self.assertIn(self.recipe, self.user.profile.favorites.all())
+
+    def test_liked_ingredient(self):
+        """Test user can like a single ingredient."""
+        self.user.profile.liked_ingredients.add(self.ingredient1)
+        self.assertIn(self.ingredient1, self.user.profile.liked_ingredients.all())
+        self.assertNotIn(self.ingredient2, self.user.profile.liked_ingredients.all())
+
+    def test_disliked_ingredient(self):
+        """Test that user can have disliked ingredients."""
+        self.assertNotIn(self.ingredient2, self.user.profile.disliked_ingredients.all())
+        self.user.profile.disliked_ingredients.add(self.ingredient2)
+        self.assertIn(self.ingredient2, self.user.profile.disliked_ingredients.all())
 
 class ManyUsersCase(TestCase):
     """Test cases where many Users are registered."""
@@ -97,3 +118,6 @@ class ManyUsersCase(TestCase):
     def test_active_count(self):
         """Make sure that the active user count is the expected size."""
         self.assertEqual(ChefProfile.active.count(), USER_BATCH_SIZE)
+
+
+
