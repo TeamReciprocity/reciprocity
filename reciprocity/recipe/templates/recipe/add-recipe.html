@@ -6,12 +6,33 @@ Reciprocity - Add Recipe
 <form method="post">
   {% csrf_token %}
   {{ recipe_form }}
-  <table>
-  {{ formset.as_p }}
-  </table>
-  <button type="submit" name="button" value="Submit">Save Recipe</button>
+  <table border="0" cellpadding="0" cellspacing="0">
+     <tbody>
+         {% for form in formset.forms %}
+         <tr>
+            <td class="ingredient_name">{{ form.ingredient }}</td>
+            <td>{{ form.quantity }}</td>
+         </tr>
+         {% endfor %}
+     </tbody>
+ </table>
+  {{ formset.management_form }}
+<button class="btn btn-default" type="button" id="add_more">Add Ingredients</button>
+<div class="row">
+    <div class="col-md-5"></div>
+    <div class="col-md-2">
+        <button class="btn btn-success" type="submit" name="button" value="Submit">Save Recipe</button>
+    </div>
+    <div class="col-md-5"></div>
+</div>
 </form>
 {% endblock %}
 {% block scripts %}
 {{ formset.media }}
+<script src="/static/clonemore.js"></script>
+<script type="text/javascript">
+$('#add_more').click(function() {
+        cloneMore('tr:last-of-type', 'ingredient_form');
+    });
+</script>
 {% endblock %}
