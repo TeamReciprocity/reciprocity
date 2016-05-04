@@ -112,7 +112,9 @@ class RecipeIngredientTest(TestCase):
 
     def test_recipe_to_ingredient(self):
         """Confirm a given recipe has a relationship to said ingredient."""
-        thru_table = RecipeIngredientRelationship.objects.filter(recipe=self.no_work_bread)
+        thru_table = RecipeIngredientRelationship.objects.filter(
+            recipe=self.no_work_bread
+        )
         self.assertTrue(thru_table.filter(ingredient=self.salt))
         self.assertEqual(self.no_work_bread.ingredients.first(), self.flour)
 
