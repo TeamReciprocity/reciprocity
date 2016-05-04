@@ -5,6 +5,8 @@ from .models import Ingredient, Recipe, RecipeIngredientRelationship
 
 import factory
 
+PASSWORD = 'this is the password'
+
 
 class UserFactory(DjangoModelFactory):
     """Instantiate a user model instance for testing."""
@@ -115,22 +117,42 @@ class RecipeIngredientTest(TestCase):
         self.assertEqual(self.no_work_bread.ingredients.first(), self.flour)
 
 
+class ViewMyRecipes(TestCase):
+    def setUp(self):
+        self.user = UserFactory()
+        self.user.set_password(PASSWORD)
+        self.user.save()
+        self.client = Client()
+        self.client.login(username=self.user, password=PASSWORD)
+        self.authored_recipe = RecipeFactory(author=self.user)
+        self.unauthored_recipe = RecipeFactory(author=UserFactory())
+
+    def test_including(self):
+        """Confirm view lists user's recipes."""
+        response = self.client.get('/recipe/view/my_recipes/')
+        self.assertIn(str(self.authored_recipe), response.content)
+
+    def test_excluding(self):
+        """Confirm view excludes non-authored recipes."""
+        response = self.client.get('/recipe/view/my_recipes/')
+        self.assertNotIn(str(self.unauthored_recipe), response.content)
+
+
 class ViewRecipe(TestCase):
     def setUp(self):
         """Prepare for test methods."""
-        password = 'this is the password'
         author = UserFactory(username='author')
-        author.set_password(password)
+        author.set_password(PASSWORD)
         author.save()
         non_author = UserFactory(username='non-author')
-        non_author.set_password(password)
+        non_author.set_password(PASSWORD)
         non_author.save()
         self.author_client = Client()
         self.loggedin = self.author_client.login(username=author.username,
-                                                 password=password)
+                                                 password=PASSWORD)
         self.non_author_client = Client()
         self.non_author_client.login(username=non_author.username,
-                                     password=password)
+                                     password=PASSWORD)
         self.public_recipe = RecipeFactory(author=author, privacy='pu')
         self.private_recipe = RecipeFactory(author=author, privacy='pr')
 
@@ -183,12 +205,11 @@ class Autocomplete(TestCase):
         """Prepare for testing methods."""
         self.auth_user = UserFactory()
         username = self.auth_user.username
-        password = 'this is the password'
-        self.auth_user.set_password(password)
+        self.auth_user.set_password(PASSWORD)
         self.auth_user.save()
         self.auth_client = Client()
         self.loggedin = self.auth_client.login(username=username,
-                                               password=password)
+                                               password=PASSWORD)
         self.unauth_client = Client()
 
     def test_authenticated(self):

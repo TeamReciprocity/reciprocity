@@ -1,12 +1,14 @@
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 from .models import Recipe
 from .views import (
     add_recipe,
     IngredientAutocomplete,
     Ingredient,
-    RecipeDetailView
+    MyRecipesListView,
+    RecipeDetailView,
 )
 
 urlpatterns = [
@@ -33,4 +35,10 @@ urlpatterns = [
             template_name='recipe/vary-recipe.html'
         )),
         name='vary-recipe'),
+    url(r'^view/my_recipes/$',
+        login_required(MyRecipesListView.as_view(
+            model=Recipe,
+            template_name='recipe/my-recipes.html'
+        )),
+        name='my-recipes')
 ]

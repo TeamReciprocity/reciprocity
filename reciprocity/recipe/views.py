@@ -2,15 +2,22 @@ from dal import autocomplete
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 from .forms import RecipeIngredientRelationshipFormSet, RecipeForm
-from .models import Ingredient, RecipeIngredientRelationship
+from .models import Ingredient, Recipe, RecipeIngredientRelationship
+
+
+class MyRecipesListView(ListView):
+    def get_queryset(self):
+        """Return authored recipes."""
+        return Recipe.objects.filter(author=self.request.user)
 
 
 class RecipeDetailView(DetailView):
     def get_object(self, queryset=None):
         """Secure private recipes."""
         recipe = super(DetailView, self).get_object()
-        if recipe.privacy != 'pu' and self.request.user.pk != recipe.author.pk:
+        if recipe.privacy != 'pu' and self.request.user != recipe.author:
             raise Http404
         return recipe
 
