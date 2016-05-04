@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from factory.django import DjangoModelFactory
 from .models import Ingredient, Recipe, RecipeIngredientRelationship

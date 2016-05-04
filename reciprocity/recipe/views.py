@@ -1,6 +1,6 @@
 from dal import autocomplete
 from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from django.views.generic.detail import DetailView
 from .forms import RecipeIngredientRelationshipFormSet, RecipeForm
 from .models import Ingredient, RecipeIngredientRelationship
