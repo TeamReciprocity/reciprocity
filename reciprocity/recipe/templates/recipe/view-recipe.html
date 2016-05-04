@@ -1,0 +1,27 @@
+{% extends 'reciprocity/base.html' %}
+{% block title %}
+Reciprocity - {{ recipe.title }}
+{% endblock %}
+{% block content %}
+<h1> {{ recipe.title }} </h1>
+<h2> {{ recipe.description }} </h2>
+<div class="container-fluid">
+{% for ingredient in recipe.ingredients_in_recipe.all %}
+<div class="row">
+  <div class="col-md-2">{{ ingredient.ingredient }}</div>
+  <div class="col-md-4">{{ ingredient.quantity }}</div>
+  <div class="col-md-5"></div>
+</div>
+{% endfor %}
+</div>
+<div class="row">
+  <div class="col-md-4">{{ recipe.directions|linebreaks }}</div>
+  <div class="col-md-8"></div>
+</div>
+{% if request.user.pk == recipe.author.pk %}
+<a href="{% url 'edit-recipe' pk=recipe.pk %}">Edit this recipe</a>
+{% endif %}
+{% if recipe.privacy == 'pu' %}
+<a href="{% url 'vary-recipe' pk=recipe.pk %}">Offer a variation on this recipe</a>
+{% endif %}
+{% endblock %}
