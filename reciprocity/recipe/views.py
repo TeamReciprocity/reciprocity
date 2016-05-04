@@ -7,6 +7,12 @@ from .forms import RecipeIngredientRelationshipFormSet, RecipeForm
 from .models import Ingredient, Recipe, RecipeIngredientRelationship
 
 
+class FavoriteRecipesView(ListView):
+    def get_queryset(self):
+        """Return favorited recipes."""
+        return Recipe.objects.filter(favorite_of=self.request.user.profile)
+
+
 class MyRecipesListView(ListView):
     def get_queryset(self):
         """Return authored recipes."""
