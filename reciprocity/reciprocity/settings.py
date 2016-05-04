@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['localhost', ]
 # Application definition
 
 INSTALLED_APPS = [
+    'django_nose',
     'recipe',
     'dal',
     'dal_select2',
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'chef_profile',
+
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -136,3 +138,8 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_SSL = True
 
 LOGIN_REDIRECT_URL = '/'
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=reciprocity,chef_profile,recipe',
+]
