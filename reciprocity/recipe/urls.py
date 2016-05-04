@@ -2,10 +2,10 @@ from django.conf.urls import url
 from .views import add_recipe, IngredientAutocomplete, Ingredient, edit_recipe
 from django.contrib.auth.decorators import login_required
 from django.views.generic.detail import DetailView
-from django.views.generic.list import ListView
 from .models import Recipe
 from .views import (
     add_recipe,
+    FavoriteRecipesView,
     IngredientAutocomplete,
     Ingredient,
     MyRecipesListView,
@@ -37,5 +37,11 @@ urlpatterns = [
             model=Recipe,
             template_name='recipe/my-recipes.html'
         )),
-        name='my-recipes')
+        name='my-recipes'),
+    url(r'^view/favorites/$',
+        login_required(FavoriteRecipesView.as_view(
+            model=Recipe,
+            template_name='recipe/favorites.html'
+        )),
+        name='favorites')
 ]
