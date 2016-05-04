@@ -1,14 +1,25 @@
 {% extends 'reciprocity/base.html' %}
+
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
 {% block title %}
 Reciprocity - Add Recipe
 {% endblock %}
+
 {% block content %}
-<form method="post">
+{% bootstrap_formset_errors formset %}
+{% bootstrap_form_errors recipe_form %}
+<form method="post" class="form" action=".">
   {% csrf_token %}
-  {{ recipe_form }}
-  <table>
-  {{ formset }}
-  </table>
-  <button type="submit" name="button" value="Submit">Save Recipe</button>
+  {% bootstrap_form recipe_form %}
+  {% bootstrap_formset formset %}
+
+ {% buttons submit='Submit' reset='Reset' layout='inline' %}
+ <a href="{% url 'home' %}" class="btn btn-primary btn-md active" role="button">Home</a>
+ {% endbuttons %}
+
 </form>
 {% endblock %}
