@@ -19,20 +19,22 @@ class IngredientAutocomplete(autocomplete.Select2QuerySetView):
 def add_recipe(request):
     if request.method == 'POST':
         form = RecipeForm(request.POST)
-        formset = RecipeIngredientRelationshipFormSet(request.POST)
+        formset = RecipeIngredientRelationshipFormSet(request.POST, prefix='ingredient_form')
         if formset.is_valid() and form.is_valid():
             form.instance.author = request.user
             form.save()
             for ingredient in formset.cleaned_data:
-                new = RecipeIngredientRelationship(recipe=form.instance,
-                                                   quantity=ingredient['quantity'],
-                                                   ingredient=ingredient['ingredient'])
-                new.save()
+                if ingredient:
+                    new = RecipeIngredientRelationship(recipe=form.instance,
+                                                       quantity=ingredient['quantity'],
+                                                       ingredient=ingredient['ingredient'])
+                    new.save()
             return HttpResponseRedirect('/')
     else:
         recipe_form = RecipeForm()
         formset = RecipeIngredientRelationshipFormSet(
-            queryset=RecipeIngredientRelationship.objects.none()
+            queryset=RecipeIngredientRelationship.objects.none(),
+            prefix='ingredient_form'
         )
     return render(request,
                   'recipe/add-recipe.html',

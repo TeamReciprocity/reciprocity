@@ -30,4 +30,5 @@ class RecipeForm(ModelForm):
 RecipeIngredientRelationshipFormSet = modelformset_factory(
     RecipeIngredientRelationship,
     fields=('ingredient', 'quantity'),
-    extra=10)
+    widgets={'ingredient': autocomplete.ModelSelect2(url='ingredient-autocomplete')},
+    extra=1)
