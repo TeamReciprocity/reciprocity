@@ -1,6 +1,6 @@
 from dal import autocomplete
 from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from .forms import RecipeIngredientRelationshipFormSet, RecipeForm
@@ -68,7 +68,7 @@ def edit_recipe(request, **kwargs):
     """Handle edit of existing recipe."""
     template = 'recipe/add-recipe.html'
     pk = kwargs.get('pk')
-    recipe = Recipe.objects.get(pk=pk)
+    recipe = get_object_or_404(Recipe, pk=pk, author=request.user)
     if request.method == 'POST':
         form = RecipeForm(request.POST, instance=recipe)
         formset = RecipeIngredientRelationshipFormSet(request.POST, prefix='ingredient_form')
