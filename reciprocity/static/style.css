@@ -33,6 +33,10 @@ td {
 #recipe_link:hover {
     color: black;
 }
+
+#ingredient_row {
+    margin-bottom: -30px;
+}
 .row {
     padding-bottom: 20px;
     overflow: hidden;
