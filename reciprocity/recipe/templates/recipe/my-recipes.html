@@ -4,7 +4,17 @@ Reciprocity - My Recipes
 {% endblock %}
 
 {% block content %}
-{% for recipe in object_list %}
-<p> <a href="{% url 'view-recipe' pk=recipe.pk %}">{{ recipe }}</a> </p>
-{% endfor %}
+<div class="container">
+    <div class="row">
+        {% for recipe in object_list %}
+        {% if not forloop.counter|divisibleby:3 %}
+          {% include 'recipe/recipe_tile.html' %}
+        {% else %}
+          {% include 'recipe/recipe_tile.html' %}
+        </div>
+        <div class="row">
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
