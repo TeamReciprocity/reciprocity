@@ -5,11 +5,26 @@
 {% endblock %}
 
 {% block content %}
-<form method='post' action='.'>
-    {% csrf_token %}
-    <table>
-        {{form.as_table}}
-    </table>
-<input type='submit' value='Login'>
-</form>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6">
+      <form method='post' action='.'>
+        {% csrf_token %}
+        <table>
+          {{form.as_table}}
+        </table>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <button class="btn" type="submit" name="button" value="Login">Login</button>
+    </div>
+    <div class="col-md-3"></div>
+  </form>
+  </div>
+</div>
 {% endblock %}
