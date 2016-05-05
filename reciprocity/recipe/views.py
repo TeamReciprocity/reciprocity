@@ -40,15 +40,15 @@ class IngredientAutocomplete(autocomplete.Select2QuerySetView):
 
 def add_recipe(request):
     if request.method == 'POST':
-        form = RecipeForm(request.POST)
+        recipe_form = RecipeForm(request.POST)
         formset = RecipeIngredientRelationshipFormSet(request.POST,
                                                       prefix='ingredient_form')
-        if formset.is_valid() and form.is_valid():
-            form.instance.author = request.user
-            form.save()
+        if formset.is_valid() and recipe_form.is_valid():
+            recipe_form.instance.author = request.user
+            recipe_form.save()
             for ingredient in formset.cleaned_data:
                 if ingredient:
-                    new = RecipeIngredientRelationship(recipe=form.instance,
+                    new = RecipeIngredientRelationship(recipe=recipe_form.instance,
                                                        quantity=ingredient['quantity'],
                                                        ingredient=ingredient['ingredient'])
                     new.save()
