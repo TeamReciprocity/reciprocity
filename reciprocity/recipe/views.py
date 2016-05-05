@@ -71,11 +71,11 @@ def edit_recipe(request, **kwargs):
     pk = kwargs.get('pk')
     recipe = Recipe.objects.get(pk=pk)
     if request.method == 'POST':
-        form = RecipeForm(request.POST, instance=recipe)
+        recipe_form = RecipeForm(request.POST, instance=recipe)
         formset = RecipeIngredientRelationshipFormSet(request.POST,
                                                       prefix='ingredient_form')
-        if formset.is_valid() and form.is_valid():
-            form.save()
+        if formset.is_valid() and recipe_form.is_valid():
+            recipe_form.save()
             for ingredient in formset.cleaned_data:
                 if ingredient:
                     if ingredient['id']:
@@ -102,23 +102,23 @@ def vary_recipe(request, **kwargs):
     pk = kwargs.get('pk')
     parent_recipe = Recipe.objects.get(pk=pk)
     if request.method == 'POST':
-        form = RecipeForm(request.POST)
+        recipe_form = RecipeForm(request.POST)
         formset = RecipeIngredientRelationshipFormSet(request.POST,
                                                       prefix='ingredient_form')
-        if formset.is_valid() and form.is_valid():
-            form.instance.author = request.user
-            form.instance.parent = parent_recipe
-            form.save()
+        if formset.is_valid() and recipe_form.is_valid():
+            recipe_form.instance.author = request.user
+            recipe_form.instance.parent = parent_recipe
+            recipe_form.save()
             for ingredient in formset.cleaned_data:
                 if ingredient:
-                    new = RecipeIngredientRelationship(recipe=form.instance,
+                    new = RecipeIngredientRelationship(recipe=recipe_form.instance,
                                                        quantity=ingredient['quantity'],
                                                        ingredient=ingredient['ingredient'])
                     new.save()
             cur = parent_recipe
             while cur:
-                form.instance.ancestors.add(cur)
-                form.save()
+                recipe_form.instance.ancestors.add(cur)
+                recipe_form.save()
                 if cur.parent:
                     cur = cur.parent
                 else:
@@ -127,6 +127,6 @@ def vary_recipe(request, **kwargs):
     else:
         recipe_form = RecipeForm(instance=parent_recipe)
         formset = RecipeIngredientRelationshipFormSet(queryset=parent_recipe.ingredients_in_recipe.all(), prefix='ingredient_form')
-        return render(request, template, {'formset': formset,
-                                          'recipe_form': recipe_form,
-                                          'page_title': 'Vary Recipe'})
+    return render(request, template, {'formset': formset,
+                                      'recipe_form': recipe_form,
+                                      'page_title': 'Vary Recipe'})
