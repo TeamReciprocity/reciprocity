@@ -14,7 +14,7 @@ TEST = [
     'coverage',
     'pytest-cov',
     'factory-boy',
-    'nose',
+    'django-nose',
 
 
 ]

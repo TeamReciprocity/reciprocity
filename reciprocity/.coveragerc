@@ -1,0 +1,4 @@
+[run]
+omit =
+    reciprocity/settings.py
+    ../*migrations*
