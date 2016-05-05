@@ -9,8 +9,25 @@ body {
 #recipe_tile {
     background-color: #F9FAFC;
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
 }
 
+#recipe_link {
+    text-decoration: none;
+    color: #445E90;
+}
+#recipe_link:hover {
+    color: black;
+}
 .row {
     padding-bottom: 20px;
+    overflow: hidden;
+}
+.page_title {
+    text-align: center;
+}
+
+[class*="col-"]{
+    margin-top: 20px
 }

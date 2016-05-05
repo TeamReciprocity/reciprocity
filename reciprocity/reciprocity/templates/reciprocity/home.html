@@ -5,41 +5,19 @@ Reciprocity - Home
 {% endblock %}
 
 {% block content %}
-    <h1>Welcome To Reciprocity!</h1>
-    <h2>Here are the most recent recipes:</h2>
     <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+              <h1 class="page_title">Welcome To Reciprocity!</h1>
+              <h2 class="page_title">Here are the most recent recipes:</h2>
+          </div>
+        </div>
         <div class="row">
         {% for recipe in latest_recipes.all %}
         {% if not forloop.counter|divisibleby:3 %}
-          <a href="{% url 'view-recipe' pk=recipe.pk %}">
-            <div id="recipe_tile" class="col-md-3">
-              <h3> {{ recipe.title }} </h3>
-              <p> {{ recipe.description }}</p>
-              {% if recipe.parent %}
-              <p> This recipe is a variation of: <a href="{% url 'view-recipe' pk=recipe.parent.pk %}"> {{ recipe.parent.title }}</a> </p>
-              {% endif %}
-              {% if recipe.variations.last %}
-              <p> Recent variation: <a href="{% url 'view-recipe' pk=recipe.variations.last.pk %}"> {{ recipe.variations.last.title }}</a> </p>
-              {% endif %}
-            </div>
-            <div class="col-md-1">
-            </div>
-          </a>
+          {% include 'recipe/recipe_tile.html' %}
         {% else %}
-        <a href="{% url 'view-recipe' pk=recipe.pk %}">
-          <div id="recipe_tile" class="col-md-3">
-            <h3> {{ recipe.title }} </h3>
-            <p> {{ recipe.description }}</p>
-            {% if recipe.parent %}
-            <p> This recipe is a variation of: <a href="{% url 'view-recipe' pk=recipe.parent.pk %}"> {{ recipe.parent.title }}</a> </p>
-            {% endif %}
-            {% if recipe.variations.last %}
-            <p> Recent variation of this recipe: <a href="{% url 'view-recipe' pk=recipe.variations.last.pk %}"> {{ recipe.variations.last.title }}</a> </p>
-            {% endif %}
-          </div>
-          <div class="col-md-1">
-          </div>
-        </a>
+          {% include 'recipe/recipe_tile.html' %}
         </div>
         <div class="row">
         {% endif %}
