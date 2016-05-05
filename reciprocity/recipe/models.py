@@ -76,6 +76,10 @@ class Recipe(models.Model):
         through='RecipeIngredientRelationship'
     )
     created = models.DateTimeField(auto_now_add=True)
+    ancestors = models.ManyToManyField('self',
+                                       related_name='total_variations',
+                                       blank=True,
+                                       symmetrical=False)
 
 
 @python_2_unicode_compatible
