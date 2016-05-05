@@ -1,8 +1,9 @@
 {% extends 'reciprocity/base.html' %}
 {% block title %}
-Reciprocity - Add Recipe
+Reciprocity - {{ page_title }}
 {% endblock %}
 {% block content %}
+<h1> {{ page_title }} </h1>
 <form method="post">
   {% csrf_token %}
   {{ recipe_form }}

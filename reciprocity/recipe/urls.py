@@ -10,6 +10,7 @@ from .views import (
     Ingredient,
     MyRecipesListView,
     RecipeDetailView,
+    vary_recipe
 )
 
 urlpatterns = [
@@ -27,10 +28,7 @@ urlpatterns = [
     url(r'^edit/(?P<pk>[0-9]+)/$',
         login_required(edit_recipe), name='edit-recipe'),
     url(r'^vary/(?P<pk>[0-9]+)/$',
-        login_required(DetailView.as_view(
-            model=Recipe,
-            template_name='recipe/vary-recipe.html'
-        )),
+        login_required(vary_recipe),
         name='vary-recipe'),
     url(r'^view/my_recipes/$',
         login_required(MyRecipesListView.as_view(
