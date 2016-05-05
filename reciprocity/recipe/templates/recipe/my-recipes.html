@@ -9,6 +9,14 @@ Reciprocity - My Recipes
         <h1> My Recipes </h1>
     </div>
     <div class="row">
+        {% if not object_list %}
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h3 class="page_title">You have not created any recipes.</h3>
+            <h4 class="page_title">Click <a href="{% url 'add-recipe' %}">Here</a> to share a recipe!</h4>
+        </div>
+        <div class="col-md-4"></div>
+        {% endif %}
         {% for recipe in object_list %}
         {% if not forloop.counter|divisibleby:3 %}
           {% include 'recipe/recipe_tile.html' %}
