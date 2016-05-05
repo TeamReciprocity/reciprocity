@@ -10,6 +10,7 @@
     </title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/style.css"
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -38,12 +39,11 @@
               <li><a href="{% url 'my-recipes' %}">My Recipes</a></li>
               <li><a href="{% url 'profile' %}">Profile</a></li>
               <li><a href="{% url 'add-recipe' %}">Add a Recipe</a></li>
-              <li><a href="{% url 'auth_logout' %}">Logout</a></li>
               {% endif %}
           </ul>
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
-            <a href="/">{{ user.username }}</a>
+            <li><a href="{% url 'auth_logout' %}">Logout</a></li>
             {% endif %}
           </ul>
         </div><!-- /.navbar-collapse -->
