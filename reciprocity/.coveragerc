@@ -1,0 +1,6 @@
+[run]
+omit =
+    reciprocity/settings.py
+    ../*migrations*
+    chef_profile/apps.py
+    chef_profile/admin.py

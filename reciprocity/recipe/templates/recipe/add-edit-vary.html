@@ -1,4 +1,5 @@
 {% extends 'reciprocity/base.html' %}
+{% load bootstrap3 %}
 {% block title %}
 Reciprocity - {{ page_title }}
 {% endblock %}
@@ -6,7 +7,8 @@ Reciprocity - {{ page_title }}
 <h1> {{ page_title }} </h1>
 <form method="post">
   {% csrf_token %}
-  {{ recipe_form }}
+
+  {% bootstrap_form recipe_form %}
   <table border="0" cellpadding="0" cellspacing="0">
      <tbody>
          {{ formset.management_form }}
