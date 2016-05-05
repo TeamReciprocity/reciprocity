@@ -11,7 +11,8 @@
         "privacy": "pu",
         "directions": "1. Combine ingredients, briefly\r\n2. Cover and let sit 18+ hours at room temperature\r\n3. Fold over two or three times\r\n4. Preheat oven to 450\u00b0, including covered baking vessel\r\n5. Turn dough into vessel and bake 30 minutes covered, 25 minutes uncovered",
         "parent": null,
-        "created": "2016-05-03T16:40:36.829Z"
+        "created": "2016-05-02T23:57:09.034Z",
+        "ancestors": []
     }
 },
 {
@@ -26,7 +27,8 @@
         "privacy": "pu",
         "directions": "Cut the celery stalks in half. Spread with peanut butter. Sprinkle with raisins.",
         "parent": null,
-        "created": "2016-05-03T16:40:36.829Z"
+        "created": "2016-05-02T23:57:09.034Z",
+        "ancestors": []
     }
 },
 {
@@ -41,7 +43,26 @@
         "privacy": "pu",
         "directions": "1. Preheat the oven to 350\u00b0\r\n2. Dice the bacon, saute it in a stock pot, and remove when cooked. Leave the bacon fat in the pot.\r\n3. While the bacon is cooking, dice two onions and chop the bell peppers. When the bacon is finished, soften the onions in the bacon fat.\r\n4. Blacken the bell peppers in the broiler.\r\n5. Without peeling, cut one onion into fat discs (1/2 inch thick) and place in a cast iron pan. Put the chicken on top of the onion slices and salt it. Roast at 350\u00b0 for 20 minutes per pound.\r\n6. When the onions are reduced and translucent, add the cooked beans, the canned tomatoes, the blackened bell peppers, the beer, and the minced garlic.\r\n7. Puree the can of chipotle peppers. It helps to thin it with liquid from the pot. Add to the pot and simmer.\r\n8. When the chicken is finished cooking, pull it and add to the chili. (I recommend saving the pan drippings as well as the onion.)\r\n9. As the chili reduces, season with cocoa powder, oregano, cumin, paprika, salt, and black pepper.\r\n10. When the chili is finished reducing, serve over rice. Garnish with bacon, shredded cheese, cilantro, or lime.",
         "parent": null,
-        "created": "2016-05-03T16:40:36.829Z"
+        "created": "2016-05-02T23:57:09.034Z",
+        "ancestors": []
+    }
+},
+{
+    "model": "recipe.recipe",
+    "pk": 11,
+    "fields": {
+        "title": "No Work Bread - wheat",
+        "description": "Adapted from Jim Lahey's recipe and inspired by the recipe found on this site.",
+        "prep_time": 4.0,
+        "cook_time": 1.0,
+        "author": 3,
+        "privacy": "pu",
+        "directions": "1. Combine ingredients, briefly\r\n2. Cover and let sit 18+ hours at room temperature\r\n3. Fold over two or three times\r\n4. Preheat oven to 450\u00b0, including covered baking vessel\r\n5. Turn dough into vessel and bake 30 minutes covered, 25 minutes uncovered",
+        "parent": 1,
+        "created": "2016-05-05T02:58:46.980Z",
+        "ancestors": [
+            1
+        ]
     }
 }
 ]

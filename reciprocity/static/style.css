@@ -47,3 +47,6 @@ td {
 .help-block {
     display: none;
 }
+.center {
+    text-align: center;
+}

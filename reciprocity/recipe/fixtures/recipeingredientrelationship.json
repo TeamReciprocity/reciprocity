@@ -169,5 +169,50 @@
         "ingredient": 20,
         "quantity": "to taste"
     }
+},
+{
+    "model": "recipe.recipeingredientrelationship",
+    "pk": 22,
+    "fields": {
+        "recipe": 11,
+        "ingredient": 22,
+        "quantity": "150 - 250 g"
+    }
+},
+{
+    "model": "recipe.recipeingredientrelationship",
+    "pk": 23,
+    "fields": {
+        "recipe": 11,
+        "ingredient": 2,
+        "quantity": "75 - 80% hydration"
+    }
+},
+{
+    "model": "recipe.recipeingredientrelationship",
+    "pk": 24,
+    "fields": {
+        "recipe": 11,
+        "ingredient": 3,
+        "quantity": "1.8%"
+    }
+},
+{
+    "model": "recipe.recipeingredientrelationship",
+    "pk": 25,
+    "fields": {
+        "recipe": 11,
+        "ingredient": 4,
+        "quantity": "1/2 - 1/4 t"
+    }
+},
+{
+    "model": "recipe.recipeingredientrelationship",
+    "pk": 26,
+    "fields": {
+        "recipe": 11,
+        "ingredient": 1,
+        "quantity": "150 - 250 g"
+    }
 }
 ]
