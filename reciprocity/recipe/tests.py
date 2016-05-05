@@ -283,7 +283,7 @@ class CreateRecipe(TestCase):
     def test_forms_available(self):
         """Verify some of the expected forms are on the page."""
         response = self.author_client.get('/recipe/add/')
-        self.assertIn('input id="id_title"', str(response.content))
+        self.assertIn('id="id_title"', str(response.content))
         self.assertIn('id="id_prep_time"', str(response.content))
         self.assertIn('id="id_cook_time"', str(response.content))
         self.assertIn('id="id_privacy"', str(response.content))
@@ -333,7 +333,7 @@ class EditRecipe(TestCase):
     def test_forms_available(self):
         """Verify some of the expected forms are on the page."""
         response = self.author_client.get('/recipe/edit/{}/'.format(self.pk))
-        self.assertIn('input id="id_title"', str(response.content))
+        self.assertIn('id="id_title"', str(response.content))
         self.assertIn('id="id_prep_time"', str(response.content))
         self.assertIn('id="id_cook_time"', str(response.content))
         self.assertIn('id="id_privacy"', str(response.content))
