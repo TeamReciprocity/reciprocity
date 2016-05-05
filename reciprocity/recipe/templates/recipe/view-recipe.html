@@ -1,27 +1,62 @@
 {% extends 'reciprocity/base.html' %}
+
 {% block title %}
 Reciprocity - {{ recipe.title }}
 {% endblock %}
+
 {% block content %}
-<h1> {{ recipe.title }} </h1>
-<h2> {{ recipe.description }} </h2>
-<div class="container-fluid">
-{% for ingredient in recipe.ingredients_in_recipe.all %}
-<div class="row">
-  <div class="col-md-2">{{ ingredient.ingredient }}</div>
-  <div class="col-md-4">{{ ingredient.quantity }}</div>
-  <div class="col-md-5"></div>
+<div class="container">
+  <h1 class="page_title">{{ recipe.title }}</h1>
+  <h2>{{ recipe.description }}</h2>
+    {% for ingredient in recipe.ingredients_in_recipe.all %}
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-4">{{ ingredient.ingredient }}</div>
+      <div class="col-md-2">{{ ingredient.quantity }}</div>
+      <div class="col-md-3"></div>
+    </div>
+    {% endfor %}
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">{{ recipe.directions|linebreaks }}</div>
+      <div class="col-md-3"></div>
+    </div>
+    {% if request.user.pk == recipe.author.pk %}
+    <a href="{% url 'edit-recipe' pk=recipe.pk %}">
+      <button class="btn">Edit this recipe</button></a>
+    {% endif %}
+    {% if recipe.privacy == 'pu' %}
+    <a href="{% url 'vary-recipe' pk=recipe.pk %}">
+      <button class="btn">Offer a variation</button></a>
+    {% endif %}
+    {% if recipe.ancestors.all %}
+    <h3>Prior versions of this recipe:</h3>
+    {% endif %}
+    <div class="row">
+      {% for recipe in recipe.ancestors.all|slice:":6" %}
+      {% if not forloop.counter|divisibleby:3 %}
+      {% include 'recipe/recipe_tile.html' %}
+      {% else %}
+      {% include 'recipe/recipe_tile.html' %}
+    </div>
+    <div class="row">
+      {% endif %}
+      {% endfor %}
+    </div>
+    {% if recipe.total_variations.all %}
+    <h3>Later versions of this recipe:</h3>
+    {% endif %}
+    <div class="row">
+      {% for recipe in recipe.total_variations.all|slice:":6" %}
+      {% if not forloop.counter|divisibleby:3 %}
+      {% include 'recipe/recipe_tile.html' %}
+      {% else %}
+      {% include 'recipe/recipe_tile.html' %}
+    </div>
+    <div class="row">
+      {% endif %}
+      {% endfor %}
+    </div>
 </div>
-{% endfor %}
-</div>
-<div class="row">
-  <div class="col-md-4">{{ recipe.directions|linebreaks }}</div>
-  <div class="col-md-8"></div>
-</div>
-{% if request.user.pk == recipe.author.pk %}
-<a href="{% url 'edit-recipe' pk=recipe.pk %}">Edit this recipe</a>
-{% endif %}
-{% if recipe.privacy == 'pu' %}
-<a href="{% url 'vary-recipe' pk=recipe.pk %}">Offer a variation on this recipe</a>
-{% endif %}
+
 {% endblock %}

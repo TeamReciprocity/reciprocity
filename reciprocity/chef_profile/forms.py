@@ -20,4 +20,4 @@ class ChefProfileForm(forms.ModelForm):
         """Establish Model and fields for user form."""
 
         model = ChefProfile
-        exclude = ['user', 'favorites']
+        exclude = ['user', 'favorites', 'disliked_ingredients', 'liked_ingredients']
