@@ -1,0 +1,16 @@
+body {
+    background-color: #EAEFF9;
+}
+
+.navbar {
+    background-color: #F9FAFC;
+}
+
+#recipe_tile {
+    background-color: #F9FAFC;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.row {
+    padding-bottom: 20px;
+}
