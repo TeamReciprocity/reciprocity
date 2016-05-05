@@ -13,8 +13,12 @@ Profile View
   <p>Last Name: {{user.last_name}}</p>
 
   <p>About Me: {{user.profile.about_me}}</p>
-  {% if user.recipes %}
-  <h2>You have recipes!</h2>
+  {% if user.authored_recipes %}
+
+  {% for recipe in user.authored_recipes.all %}
+   {{recipe.title}}
+   {% endfor %}
+
   {% else %}
   <h2>You have no recipes</h2>
 
