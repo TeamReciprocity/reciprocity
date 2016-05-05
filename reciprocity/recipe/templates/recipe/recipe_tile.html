@@ -3,9 +3,11 @@
     <h3> {{ recipe.title|truncatewords:10 }} </h3>
     <p> {{ recipe.description|truncatewords:15 }}</p>
     {% if recipe.parent %}
+    <hr>
      <a id=recipe_link href="{% url 'view-recipe' pk=recipe.parent.pk %}"> <p> This recipe is a variation of: {{ recipe.parent.title|truncatewords:10 }}</a> </p>
     {% endif %}
     {% if recipe.variations.last %}
+    <hr>
     <a id=recipe_link href="{% url 'view-recipe' pk=recipe.variations.last.pk %}"> <p> Recent variation: {{ recipe.variations.last.title|truncatewords:10 }}</a> </p>
     {% endif %}
   </div>
