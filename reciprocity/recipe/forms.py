@@ -1,6 +1,6 @@
 from .models import Ingredient, Recipe, RecipeIngredientRelationship
 from dal import autocomplete
-from django.forms import inlineformset_factory, modelformset_factory, ModelChoiceField, ModelForm
+from django.forms import inlineformset_factory, modelformset_factory, ModelChoiceField, ModelForm, TextInput
 
 
 class IngredientForm(ModelForm):
@@ -30,5 +30,6 @@ class RecipeForm(ModelForm):
 RecipeIngredientRelationshipFormSet = modelformset_factory(
     RecipeIngredientRelationship,
     fields=('ingredient', 'quantity'),
-    widgets={'ingredient': autocomplete.ModelSelect2(url='ingredient-autocomplete')},
+    widgets={'ingredient': autocomplete.ModelSelect2(url='ingredient-autocomplete'),
+             'quantity': TextInput(attrs={'class': 'form-control'})},
     extra=1)
