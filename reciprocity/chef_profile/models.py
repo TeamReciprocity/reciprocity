@@ -28,7 +28,7 @@ class ChefProfile(models.Model):
     disliked_ingredients = models.ManyToManyField(Ingredient,
                                                   related_name='disliked_by',
                                                   blank=True)
-    about_me = models.TextField(null=True, blank=True, )
+    about_me = models.TextField(blank=True, default="")
 
     objects = models.Manager()
     active = ActiveManager()
