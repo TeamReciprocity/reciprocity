@@ -1,0 +1,56 @@
+body {
+    background-color: #EAEFF9;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.75em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cardo', serif;
+    text-shadow: 2px 2px rgba(0,0,0,0.05);
+}
+
+td {
+    padding-right: 50px;
+}
+.navbar {
+    background-color: #F9FAFC;
+}
+
+#site_description {
+    margin-bottom: 100px;
+}
+#recipe_tile {
+    background-color: #F9FAFC;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+
+#recipe_link {
+    text-decoration: none;
+    color: #445E90;
+}
+#recipe_link:hover {
+    color: black;
+}
+
+#ingredient_row {
+    margin-bottom: -30px;
+}
+.row {
+    padding-bottom: 20px;
+    overflow: hidden;
+}
+.page_title {
+    text-align: center;
+}
+
+[class*="col-"]{
+    margin-top: 20px
+}
+.help-block {
+    display: none;
+}
+.center {
+    text-align: center;
+}

@@ -1,0 +1,46 @@
+{% extends 'reciprocity/base.html' %}
+{% load bootstrap3 %}
+{% block title %}
+Reciprocity - {{ page_title }}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h1> {{ page_title }} </h1>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form recipe_form %}
+        <table border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+                {{ formset.management_form }}
+                {% bootstrap_formset_errors formset %}
+                {% for form in formset.forms %}
+                {{ form.id }}
+                <tr>
+                    <td class="ingredient_name"><p>Ingredient: </p>{{ form.ingredient }}</td>
+                    <td><p>Quantity: </p>{{ form.quantity }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button class="btn btn-default" type="button" id="add_more">Add Ingredients</button>
+        <div class="row">
+            <div class="col-md-5"></div>
+            <div class="col-md-2">
+                <button class="btn btn-success" type="submit" name="button" value="Submit">Save Recipe</button>
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block scripts %}
+{{ formset.media }}
+<script src="/static/clonemore.js"></script>
+<script type="text/javascript">
+$('#add_more').click(function() {
+        cloneMore('tr:last-of-type', 'ingredient_form');
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "reciprocity/base.html" %}
+
+{% block title %}
+Reciprocity - Home
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+              <h1 class="page_title">Welcome To Reciprocity!</h1>
+              <h4 id="site_description" class="page_title">The Recipe Sharing and Collaboration Site</h3>
+              <h2 class="page_title">Check Out These Recent Recipes</h2>
+          </div>
+        </div>
+        <div class="row">
+        {% for recipe in latest_recipes.all %}
+        {% if not forloop.counter|divisibleby:3 %}
+          {% include 'recipe/recipe_tile.html' %}
+        {% else %}
+          {% include 'recipe/recipe_tile.html' %}
+        </div>
+        <div class="row">
+        {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}
