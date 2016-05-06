@@ -5,21 +5,16 @@
 {% endblock %}
 
 {% block content %}
-
-<form method='post' action='.'>
-{% csrf_token %}
-
-
-{% bootstrap_form user_form %}
-
-{% bootstrap_form profile_form %}
-
-
-
-<input type="submit" value='Save'>
-<a href="{% url 'profile' %}"><button type="button">Cancel</button></a>
-
-
+<div class="container">
+    <div class="row">
+        <h1> Edit Profile </h1>
+    </div>
+    <form method='post' action='.'>
+    {% csrf_token %}
+    {% bootstrap_form user_form %}
+    {% bootstrap_form profile_form %}
+    <input type="submit" value='Save'>
+    <a href="{% url 'profile' %}"><button type="button">Cancel</button></a>
 </form>
 
 {% endblock %}
