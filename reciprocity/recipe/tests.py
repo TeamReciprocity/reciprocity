@@ -2,8 +2,8 @@ from django.conf import settings
 from django.test import Client, TestCase
 from factory.django import DjangoModelFactory
 from .models import Ingredient, Recipe, RecipeIngredientRelationship
-from .forms import RecipeIngredientRelationshipFormSet, IngredientForm
-from .forms import RecipeForm
+from .forms import RecipeIngredientRelationshipFormSet, IngredientForm, RecipeForm
+from .views import vary_recipe
 from django.forms import formsets
 from datetime import datetime
 import factory
@@ -451,6 +451,22 @@ class ModelTests(TestCase):
 
     def test_relationship_quantity(self):
         self.assertEquals(self.relationship1.quantity, '5 Cups')
+
+
+class VaryRecipeView(TestView):
+
+    def setUp(self):
+        super(VaryRecipeView, self).setUp()
+
+        self.recipe = RecipeFactory(author=self.user)
+
+        self.url = ''.join(['/recipe/vary/', str(self.recipe.pk), '/'])
+
+    def test_get(self):
+        """Confirm can get 200."""
+        response = self.client.get(self.url)
+
+        self.assertEqual(response.status_code, 200)
 
 
 #     def test_autocomplete_can_create(self):
