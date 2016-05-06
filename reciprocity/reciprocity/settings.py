@@ -139,10 +139,10 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_SSL = True
 
 LOGIN_REDIRECT_URL = '/'
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-NOSE_ARGS = [
-    '--with-coverage',
-    '--cover-package=reciprocity,chef_profile,recipe',
-    '--cover-inclusive'
+# TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+# NOSE_ARGS = [
+#     '--with-coverage',
+#     '--cover-package=reciprocity,chef_profile,recipe',
+#     '--cover-inclusive'
 
-]
+# ]
