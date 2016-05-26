@@ -69,7 +69,7 @@ def edit_recipe(request, **kwargs):
     pk = kwargs.get('pk')
     recipe = Recipe.objects.get(pk=pk)
     if request.method == 'POST':
-        recipe_form = RecipeForm(request.POST, instance=recipe)
+        recipe_form = RecipeForm(request.POST, request.FILES, instance=recipe)
         formset = RecipeIngredientRelationshipFormSet(request.POST,
                                                       prefix='ingredient_form')
         if formset.is_valid() and recipe_form.is_valid():
@@ -100,7 +100,7 @@ def vary_recipe(request, **kwargs):
     pk = kwargs.get('pk')
     parent_recipe = Recipe.objects.get(pk=pk)
     if request.method == 'POST':
-        recipe_form = RecipeForm(request.POST)
+        recipe_form = RecipeForm(request.POST, request.FILES)
         formset = RecipeIngredientRelationshipFormSet(request.POST,
                                                       prefix='ingredient_form')
         if formset.is_valid() and recipe_form.is_valid():
