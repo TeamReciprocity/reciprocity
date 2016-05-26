@@ -60,3 +60,14 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+#Virtual
+venv/
+bin/
+include/
+share/
+pip-selfcheck.json
+db.sqlite3
+
+# Media
+media/

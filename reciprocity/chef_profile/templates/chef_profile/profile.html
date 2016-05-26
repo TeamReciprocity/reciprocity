@@ -1,0 +1,25 @@
+{% extends "reciprocity/base.html" %}
+
+{% block title %}
+Profile View
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+<div class="col-md-4"></div>
+  <div id="recipe_tile" class="col-md-4 offset-by-4">
+    <h3> {{ user.username }}'s Profile</h3>
+    <br>
+    <h5>First Name: {{user.first_name}}</h5>
+    <br>
+    <h5>Last Name: {{user.last_name}}</h5>
+    <br>
+    <h5>About Me: {{user.profile.about_me}}</h5>
+    <br>
+   <button class="btn btn-sm"><a href="/profile/edit">Edit Profile</a></button>
+  </div>
+  </div>
+
+
+{% endblock %}
