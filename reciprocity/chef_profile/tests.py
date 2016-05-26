@@ -1,13 +1,18 @@
 """Test ChefProfile model."""
 from __future__ import unicode_literals
 from django.conf import settings
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.db.models import QuerySet, Manager
 from recipe.tests import RecipeFactory, IngredientFactory
 from .models import ChefProfile
+from django.contrib.auth.models import Permission
 import factory
 
 USER_BATCH_SIZE = 20
+MODELS = ['recipe', 'ingredient', 'recipeingredientrelationship']
+ACTIONS = ['add', 'change', 'delete']
+PERMS = ['_'.join((action, model)) for action in ACTIONS for model in MODELS]
+PERMS += ['change_user', 'change_chefprofile']
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -48,11 +53,17 @@ class SingleUserCase(TestCase):
     """Set up single user for tests."""
 
     def setUp(self):
-        """Create a user for testing."""
+        """Create a user for testing, add same permissions assigned in 
+        handlers.py.
+        """
         self.user = UserFactory.create()
         self.recipe = RecipeFactory.create()
         self.ingredient1 = IngredientFactory.create()
         self.ingredient2 = IngredientFactory.create()
+
+        for codename in PERMS:
+            perm = Permission.objects.get(codename=codename)
+            self.user.user_permissions.add(perm)
 
 
 class BasicUserProfileCase(SingleUserCase):
@@ -85,7 +96,7 @@ class BasicUserProfileCase(SingleUserCase):
 
     def test_about_me(self):
         """Test that User.profile.about_me can be added as expected."""
-        self.assertIsNone(self.user.profile.about_me)
+        self.assertEqual(self.user.profile.about_me, '')
         self.user.profile.about_me = 'Here is something about me'
         self.user.save()
         self.assertEqual(self.user.profile.about_me, 'Here is something about me')
@@ -107,6 +118,49 @@ class BasicUserProfileCase(SingleUserCase):
         self.assertNotIn(self.ingredient2, self.user.profile.disliked_ingredients.all())
         self.user.profile.disliked_ingredients.add(self.ingredient2)
         self.assertIn(self.ingredient2, self.user.profile.disliked_ingredients.all())
+
+    def test_has_add_ing_perm(self):
+        """Test that user has permission to create an ingredient."""
+        perms = [x.codename for x in self.user.user_permissions.all()]
+        self.assertIn('add_ingredient', perms)
+
+    def test_has_add_rec_perm(self):
+        """Test that user has permission to create a recipe."""
+        perms = [x.codename for x in self.user.user_permissions.all()]
+        self.assertIn('add_recipe', perms)
+
+    def test_has_add_rel_perm(self):
+        """Test that user has permission to create a rec/ing/rel."""
+        perms = [x.codename for x in self.user.user_permissions.all()]
+        self.assertIn('add_recipeingredientrelationship', perms)
+
+    def test_has__edit_perms(self):
+        """Test that user has permission to edit an ingredient."""
+        perms = [x.codename for x in self.user.user_permissions.all()]
+        self.assertIn('change_ingredient', perms)
+
+    def test_has__edit_rec_perms(self):
+        """Test that user has permission to edit a recipe."""
+        perms = [x.codename for x in self.user.user_permissions.all()]
+        self.assertIn('change_recipe', perms)
+
+    def test_edit_user(self):
+        """Test that a user can edit their info."""
+        perms = [x.codename for x in self.user.user_permissions.all()]
+        self.assertIn('change_chefprofile', perms)
+        self.assertIn('change_user', perms)
+
+    def test_can_see_profile(self):
+        """Test that profile view works."""
+        client = Client()
+        response = client.get('/profile/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_non_logged_in_redirects(self):
+        """Test that a non logged in user is redirected from edit."""
+        client = Client()
+        response = client.get('/profile/edit/')
+        self.assertEqual(response.status_code, 302)
 
 class ManyUsersCase(TestCase):
     """Test cases where many Users are registered."""
