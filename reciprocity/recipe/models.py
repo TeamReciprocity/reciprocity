@@ -80,6 +80,7 @@ class Recipe(models.Model):
                                        related_name='total_variations',
                                        blank=True,
                                        symmetrical=False)
+    photo = models.ImageField(upload_to='recipe_photos', blank=True)
 
 
 @python_2_unicode_compatible

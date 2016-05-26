@@ -2,6 +2,9 @@
   <div id="recipe_tile" class="col-md-3">
     <h3> {{ recipe.title|truncatewords:10 }} </h3>
     <p> {{ recipe.description|truncatewords:15 }}</p>
+    {% if recipe.photo %}
+  <img class="center-block img-responsive" src="{{ recipe.photo.url }}"/>
+  {% endif %}
     {% if recipe.parent %}
     <hr>
      <a id=recipe_link href="{% url 'view-recipe' pk=recipe.parent.pk %}"> <p> This recipe is a variation of: {{ recipe.parent.title|truncatewords:10 }}</a> </p>

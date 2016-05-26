@@ -24,6 +24,7 @@ class RecipeForm(ModelForm):
             'cook_time',
             'privacy',
             'directions',
+            'photo'
         ]
 
 

@@ -8,6 +8,9 @@ Reciprocity - {{ recipe.title }}
 <div class="container">
   <h1 class="page_title">{{ recipe.title }}</h1>
   <h3 class="page_title">{{ recipe.description }}</h2>
+{% if recipe.photo %}
+  <img class="center-block img-responsive" src="{{ recipe.photo.url }}"/>
+  {% endif %}
   <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
