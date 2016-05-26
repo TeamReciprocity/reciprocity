@@ -38,7 +38,7 @@ class IngredientAutocomplete(autocomplete.Select2QuerySetView):
 
 def add_recipe(request):
     if request.method == 'POST':
-        recipe_form = RecipeForm(request.POST)
+        recipe_form = RecipeForm(request.POST, request.FILES)
         formset = RecipeIngredientRelationshipFormSet(request.POST,
                                                       prefix='ingredient_form')
         if formset.is_valid() and recipe_form.is_valid():
