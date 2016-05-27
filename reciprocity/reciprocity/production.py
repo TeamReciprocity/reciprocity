@@ -1,7 +1,7 @@
 """Overwrite and add settings specifically for production deployed instance."""
 from reciprocity.settings import *
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS.append('.us-west-2.compute.amazonaws.com')
 ALLOWED_HOSTS.append('reciprocity.site')
 ALLOWED_HOSTS.append('52.39.90.167')
