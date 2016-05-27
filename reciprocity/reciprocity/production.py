@@ -2,6 +2,7 @@
 from reciprocity.settings import *
 
 DEBUG = False
+ALLOWED_HOSTS.append('*')
 ALLOWED_HOSTS.append('.us-west-2.compute.amazonaws.com')
 ALLOWED_HOSTS.append('reciprocity.site')
 ALLOWED_HOSTS.append('52.39.90.167')
